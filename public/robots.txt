@@ -1,7 +1,7 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /private/
 
+User-agent: Googlebot
+Disallow: 
+User-agent: *
+Disallow: 
+Disallow: /cgi-bin/
 Sitemap: https://dummy.mauve.vercel.app/sitemap.xml
