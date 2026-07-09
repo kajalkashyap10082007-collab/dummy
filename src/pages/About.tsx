@@ -9,13 +9,13 @@ export function About() {
       "@type": "Organization",
       "name": "Clothify",
       "description": "Ethical and Sustainable Premium Fashion Clothing",
-      "url": "https://clothify.netlify.app/"
+      "url": "https://dummy-mauve.vercel.app"
     }
   });
 
  return (
  <div className="bg-slate-50 min-h-screen relative overflow-hidden">
-  <SEO title="About Clothify | Ethical & Sustainable Premium Fashion" description="Learn about Clothify's commitment to quality, sustainable, and ethical premium fashion clothing for men, women, and kids." schemaMarkup={aboutSchema} canonicalUrl="https://clothify.netlify.app/about-clothify-sustainable-fashion" />
+  <SEO title="About Clothify | Ethical & Sustainable Premium Fashion" description="Learn about Clothify's commitment to quality, sustainable, and ethical premium fashion clothing for men, women, and kids." schemaMarkup={aboutSchema} canonicalUrl="https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion"/>
   {/* Decorative background blobs */}
   <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-teal-50/50 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
   <div className="absolute bottom-0 right-0 w-[60vw] h-[60vw] bg-amber-50/50 rounded-full blur-3xl translate-y-1/4 translate-x-1/4 pointer-events-none"></div>
