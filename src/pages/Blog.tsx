@@ -10,12 +10,12 @@ export function Blog() {
     "@type": "Blog",
     "name": "Sustainable & Ethical Fashion Blog | Clothify",
     "description": "Read the latest tips, trends, and news on sustainable fashion and premium clothing on the Clothify blog.",
-    "url": "https://clothify.netlify.app/sustainable-fashion-blog"
+    "url": "https://dummy-mauve.vercel.app/sustainable-fashion-blog""
   });
 
  return (
  <div className="bg-slate-50 min-h-screen relative overflow-hidden">
-  <SEO title="Sustainable & Ethical Fashion Blog | Clothify" description="Read the latest tips, trends, and news on sustainable fashion and premium clothing on the Clothify blog." schemaMarkup={blogSchema} canonicalUrl="https://clothify.netlify.app/sustainable-fashion-blog" />
+  <SEO title="Sustainable & Ethical Fashion Blog | Clothify" description="Read the latest tips, trends, and news on sustainable fashion and premium clothing on the Clothify blog." schemaMarkup={blogSchema} canonicalUrl="https://dummy-mauve.vercel.app/sustainable-fashion-blog"/>
   {/* Decorative background blobs */}
   <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-teal-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
   <div className="absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-blue-50/50 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
