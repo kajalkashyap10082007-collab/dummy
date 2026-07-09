@@ -19,10 +19,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="about-clothify-sustainable-fashion" element={<About />} />
-            <Route path="premium-clothing-collection" element={<Products />} />
-            <Route path="sustainable-fashion-blog" element={<Blog />} />
-            <Route path="contact-clothify" element={<Contact />} />
+           <Route path="about-clothify-sustainable-fashion" element={<About />} />
+           <Route path="premium-clothing-collection" element={<Products />} />
+          <Route path="sustainable-fashion-blog" element={<Blog />} />
+               <Route path="contact-clothify" element={<Contact />} />
           </Route>
         </Routes>
       </Router>

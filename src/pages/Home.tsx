@@ -104,10 +104,10 @@ export function Home() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Clothify",
-    "url": "https://clothify.netlify.app/",
+    "url": "https://dummy-mauve.vercel.app",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://clothify.netlify.app/premium-clothing-collection?search={search_term_string}",
+      "target": "https://dummy-mauve.vercel.app/premium-clothing-collection?search={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   });
@@ -118,7 +118,7 @@ export function Home() {
         title="Premium Clothing & Fashion for Men, Women & Kids | Clothify" 
         description="Shop sustainable, ethical, and premium fashion clothing at Clothify. Explore our latest collection of premium clothing and accessories for men, women, and kids." 
         schemaMarkup={homeSchema}
-        canonicalUrl="https://clothify.netlify.app/"
+        canonicalUrl="https://dummy-mauve.vercel.app"
       />
       {/* Search & Categories Bar (Mobile mostly, or clean quick links) */}
       <div className="bg-white/80 backdrop-blur-md border-b border-zinc-100 py-4 shadow-sm overflow-x-auto no-scrollbar">
@@ -242,7 +242,7 @@ export function Home() {
               >
                 <img 
                   src={brand.image} 
-                  alt={brand.name} 
+                  alt={`${brand.name} Premium Clothing Collection`}
                   loading="lazy"
                   onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&w=400&h=500&fit=crop' }}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
