@@ -22,12 +22,12 @@ export function Contact() {
     "@type": "ContactPage",
     "name": "Contact Clothify | Customer Support & Inquiries",
     "description": "Get in touch with Clothify for any questions about our premium clothing, ethical fashion practices, or your orders. We're here to help!",
-    "url": "https://clothify.netlify.app/contact-clothify"
+    "url": "https://dummy-mauve.vercel.app/contact-clothify""
   });
 
  return (
  <div className="bg-slate-50 min-h-screen py-16 relative overflow-hidden">
-  <SEO title="Contact Clothify | Customer Support & Inquiries" description="Get in touch with Clothify for any questions about our premium clothing, ethical fashion practices, or your orders. We're here to help!" schemaMarkup={contactSchema} canonicalUrl="https://clothify.netlify.app/contact-clothify" />
+  <SEO title="Contact Clothify | Customer Support & Inquiries" description="Get in touch with Clothify for any questions about our premium clothing, ethical fashion practices, or your orders. We're here to help!" schemaMarkup={contactSchema} canonicalUrl="https://dummy-mauve.vercel.app/contact-clothify"/>
   {/* Decorative background blobs */}
   <div className="absolute top-10 left-10 w-[40vw] h-[40vw] bg-teal-100/40 rounded-full blur-3xl pointer-events-none"></div>
   <div className="absolute bottom-10 right-10 w-[50vw] h-[50vw] bg-amber-100/40 rounded-full blur-3xl pointer-events-none"></div>
@@ -109,6 +109,13 @@ export function Contact() {
  <div className="absolute inset-0 flex items-center justify-center">
  <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-sm shadow-lg text-xs font-semibold tracking-wider text-black uppercase">
  View on Google Maps
+ <a
+  href="https://maps.google.com/..."
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  {/* Map image and overlay */}
+</a>
  </div>
  </div>
  </div>
