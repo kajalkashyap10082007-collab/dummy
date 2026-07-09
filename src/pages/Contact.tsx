@@ -111,7 +111,7 @@ export function Contact() {
  View on Google Maps
  <a
   href="https://maps.google.com/..."
-  target="_blank"
+  target="_blank"g
   rel="noopener noreferrer"
 >
   {/* Map image and overlay */}
