@@ -22,7 +22,7 @@ export function Contact() {
     "@type": "ContactPage",
     "name": "Contact Clothify | Customer Support & Inquiries",
     "description": "Get in touch with Clothify for any questions about our premium clothing, ethical fashion practices, or your orders. We're here to help!",
-    "url": "https://dummy-mauve.vercel.app/contact-clothify""
+    "url": "https://dummy-mauve.vercel.app/contact-clothify"
   });
 
  return (
