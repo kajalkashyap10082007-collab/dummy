@@ -1,16 +1,15 @@
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { products } from '../data';
-import { Search } from 'lucide-react';
-import { ProductCard } from '../components/ProductCard';
-import { SEO } from '../components/SEO';
+import { useState, useMemo, type ChangeEvent } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { products } from "../data";
+import { Search } from "lucide-react";
+import { ProductCard } from "../components/ProductCard";
+import { SEO } from "../components/SEO";
+import type { Product } from "../types";
 
 export function Products() {
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Search Filter Only
-  const filteredProducts = useMemo(() => {
+  const filteredProducts = useMemo<Product[]>(() => {
     return products.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -31,9 +30,9 @@ export function Products() {
       "offers": {
         "@type": "Offer",
         "price": p.price,
-        "priceCurrency": "INR"
-      }
-    }))
+        "priceCurrency": "INR",
+      },
+    })),
   });
 
   return (
@@ -45,7 +44,8 @@ export function Products() {
         schemaMarkup={productsSchema}
         canonicalUrl="https://dummy-mauve.vercel.app/premium-clothing-collection"
       />
-            {/* Header */}
+
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
 
         <div>
@@ -58,13 +58,15 @@ export function Products() {
           </p>
         </div>
 
+
         {/* Search Box */}
         <div className="relative w-full md:w-80">
+
           <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
             className="w-full rounded-lg border border-zinc-300 bg-white py-3 pl-11 pr-4 text-sm text-zinc-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
           />
 
@@ -72,11 +74,13 @@ export function Products() {
             className="absolute left-3 top-3.5 text-zinc-400"
             size={18}
           />
+
         </div>
 
       </div>
 
-      {/* Products Grid */}
+
+      {/* Products */}
       {filteredProducts.length === 0 ? (
 
         <div className="text-center py-24">
@@ -96,20 +100,38 @@ export function Products() {
         <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-        ></motion.div>
-                  <AnimatePresence>
+        >
+
+          <AnimatePresence>
+
             {filteredProducts.map((product) => (
+
               <motion.div
                 key={product.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.95
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.95
+                }}
+                transition={{
+                  duration: 0.3
+                }}
               >
+
                 <ProductCard product={product} />
+
               </motion.div>
+
             ))}
+
           </AnimatePresence>
 
         </motion.div>

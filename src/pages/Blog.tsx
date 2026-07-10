@@ -3,6 +3,7 @@ import { blogPosts } from '../data';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import type { SyntheticEvent } from 'react';
 
 export function Blog() {
   const blogSchema = JSON.stringify({
@@ -10,7 +11,7 @@ export function Blog() {
     "@type": "Blog",
     "name": "Sustainable & Ethical Fashion Blog | Clothify",
     "description": "Read the latest tips, trends, and news on sustainable fashion and premium clothing on the Clothify blog.",
-    "url": "https://dummy-mauve.vercel.app/sustainable-fashion-blog""
+    "url": "https://dummy-mauve.vercel.app/sustainable-fashion-blog"
   });
 
  return (
@@ -52,7 +53,7 @@ export function Blog() {
  src={post.image} 
  alt={`${post.title} - sustainable fashion trends`} 
  loading="lazy"
- onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=800' }}
+ onError={(e: SyntheticEvent<HTMLImageElement, Event>) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=800' }}
  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
  />
  <div className="absolute top-4 left-4 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wider text-black rounded-sm shadow-sm">

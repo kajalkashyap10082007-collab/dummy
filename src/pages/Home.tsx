@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useRef, useEffect } from 'react';
-import { products, testimonials } from '../data';
-import { ArrowRight, Star, Truck, RefreshCw, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useRef, useEffect, type MouseEvent } from 'react';
+import { products } from '../data';
+import { ArrowRight, Truck, RefreshCw, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { SEO } from '../components/SEO';
 
@@ -57,7 +57,7 @@ export function Home() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -74,7 +74,7 @@ export function Home() {
     setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     if (sliderRef.current) {
       setStartX(e.pageX - sliderRef.current.offsetLeft);
@@ -90,7 +90,7 @@ export function Home() {
     setIsDragging(false);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return;
     e.preventDefault();
     if (sliderRef.current) {

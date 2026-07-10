@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { SEO } from '../components/SEO';
@@ -7,7 +7,7 @@ export function Contact() {
  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
  const [isSent, setIsSent] = useState(false);
 
- const handleSubmit = (e: React.FormEvent) => {
+ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
  e.preventDefault();
  // Simulate API call
  setTimeout(() => {
