@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Star, ShoppingBag, Heart } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types';
 import { useStore } from '../store';
@@ -20,6 +20,15 @@ export function QuickView({ product, isOpen, onClose }: QuickViewProps) {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
   const isWishlisted = wishlist.some(p => p.id === product.id);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   const handleAddToCart = () => {
     if (product.sizes && product.sizes.length > 0 && !selectedSize) {
@@ -50,6 +59,9 @@ export function QuickView({ product, isOpen, onClose }: QuickViewProps) {
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           <motion.div 
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quick-view-title"
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }} 
@@ -68,12 +80,12 @@ export function QuickView({ product, isOpen, onClose }: QuickViewProps) {
             </button>
             
             <div className="w-full md:w-1/2 h-64 md:h-auto bg-zinc-100 relative">
-              <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+              <img src={product.image} alt={product.imageAlt || `${product.category} ${product.name}`} width="900" height="1125" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-top" />
             </div>
             
             <div className="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto max-h-[90vh] no-scrollbar">
               <span className="text-xs font-black text-blue-700 uppercase tracking-widest">{product.category}</span>
-              <h2 className="text-2xl font-black text-zinc-900 mt-2 mb-3">{product.name}</h2>
+              <h2 id="quick-view-title" className="text-2xl font-black text-zinc-900 mt-2 mb-3">{product.name}</h2>
               
               <div className="flex items-center gap-3 mb-4 text-yellow-500">
                 <div className="flex">

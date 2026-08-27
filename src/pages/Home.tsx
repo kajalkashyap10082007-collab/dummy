@@ -41,6 +41,13 @@ export function Home() {
   const newArrivals = products.filter(p => p.isTrending).slice(0, 4);
   const bestSellers = products.filter(p => p.rating >= 4.5).slice(0, 4);
   const saleProducts = products.filter(p => p.originalPrice).slice(0, 4);
+  const homeSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "name": "Clothify", "url": "https://dummy-mauve.vercel.app/" },
+      { "@type": "WebSite", "name": "Clothify", "url": "https://dummy-mauve.vercel.app/", "potentialAction": { "@type": "SearchAction", "target": "https://dummy-mauve.vercel.app/products?search={search_term_string}", "query-input": "required name=search_term_string" } }
+    ]
+  });
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
@@ -64,8 +71,10 @@ export function Home() {
   return (
     <div className="bg-[#f8f9fa] min-h-screen">
       <SEO 
-        title="Clothify | Premium Clothing & Sustainable Fashion Online" 
-        description="Shop the latest trends in premium clothing at Clothify. Discover our sustainable fashion collection, top brands, and exclusive styles for every occasion." 
+        title="Clothify - Affordable Fashion for Men, Women & Kids" 
+        description="Discover affordable and trendy clothing for men, women and kids at Clothify. Shop stylish fashion, new arrivals and great deals online." 
+        schemaMarkup={homeSchema}
+        canonicalUrl="https://dummy-mauve.vercel.app/"
       />
       {/* Hero Carousel */}
       <section 
@@ -85,8 +94,10 @@ export function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10" />
             <img 
               src={HERO_SLIDES[currentSlide].image} 
-              alt={HERO_SLIDES[currentSlide].title}
-              loading="lazy"
+              alt="Clothify affordable fashion collection"
+              width="1920"
+              height="600"
+              loading={currentSlide === 0 ? 'eager' : 'lazy'}
               onError={(e) => { e.currentTarget.src = HERO_SLIDES[currentSlide].fallback }}
               className="w-full h-full object-cover object-top"
             />
@@ -99,14 +110,22 @@ export function Home() {
               >
                 {HERO_SLIDES[currentSlide].subtitle}
               </motion.span>
-              <motion.h1 
+              <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 className="text-white text-3xl md:text-6xl font-black mb-4 uppercase tracking-tight max-w-2xl"
               >
-                {HERO_SLIDES[currentSlide].title}
+                Affordable Fashion for Everyone
               </motion.h1>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45 }}
+                className="text-white text-xl md:text-3xl font-black mb-4 uppercase tracking-tight max-w-2xl"
+              >
+                {HERO_SLIDES[currentSlide].title}
+              </motion.h2>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -179,12 +198,12 @@ export function Home() {
             <span className="bg-amber-400 text-zinc-900 text-xs font-black px-3 py-1 rounded-sm uppercase tracking-widest w-max mb-4">Deal of the Day</span>
             <h2 className="text-3xl md:text-5xl font-black mb-4">Premium Denim Collection</h2>
             <p className="text-blue-100 mb-8 max-w-md leading-relaxed">Upgrade your wardrobe with our latest sustainable denim styles. Comfort meets durability.</p>
-            <Link to="/products?category=Jeans" className="bg-white text-blue-700 px-8 py-3 rounded-sm font-bold uppercase tracking-widest text-sm hover:bg-zinc-100 transition-colors w-max flex items-center min-h-[44px]">
+            <Link to="/products?search=jeans" className="bg-white text-blue-700 px-8 py-3 rounded-sm font-bold uppercase tracking-widest text-sm hover:bg-zinc-100 transition-colors w-max flex items-center min-h-[44px]">
               Shop Denim <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>
           <div className="md:w-1/2 min-h-[300px] relative">
-            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000" alt="Denim Collection" className="absolute inset-0 w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000" alt="Blue denim collection" width="1000" height="667" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
           </div>
         </div>
 
@@ -213,8 +232,8 @@ export function Home() {
             <div className="w-20 h-1 bg-blue-700 rounded-full mx-auto"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link to="/products?category=T-Shirts" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" alt="T-Shirts" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <Link to="/products?category=Men" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
+              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" alt="Men's cotton t-shirts" width="800" height="1000" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
                   <h3 className="text-white text-2xl font-black mb-1">T-Shirts</h3>
@@ -222,8 +241,8 @@ export function Home() {
                 </div>
               </div>
             </Link>
-            <Link to="/products?category=Dresses" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" alt="Dresses" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <Link to="/products?category=Women" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
+              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" alt="Women's evening dresses" width="800" height="1000" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
                   <h3 className="text-white text-2xl font-black mb-1">Dresses</h3>
@@ -231,8 +250,8 @@ export function Home() {
                 </div>
               </div>
             </Link>
-            <Link to="/products?category=Accessories" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800" alt="Accessories" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <Link to="/products?category=Kids" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
+              <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800" alt="Kids' fashion accessories" width="800" height="1000" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
                   <h3 className="text-white text-2xl font-black mb-1">Accessories</h3>
@@ -260,6 +279,12 @@ export function Home() {
             ))}
           </div>
         </section>
+
+        <nav aria-label="Explore Clothify" className="flex flex-wrap justify-center gap-6 border-t border-zinc-200 pt-8 text-sm font-bold uppercase tracking-widest text-zinc-600">
+          <Link to="/about-clothify-sustainable-fashion" className="hover:text-blue-700">About Clothify</Link>
+          <Link to="/sustainable-fashion-blog" className="hover:text-blue-700">Fashion Blog</Link>
+          <Link to="/contact-clothify" className="hover:text-blue-700">Contact Support</Link>
+        </nav>
 
       </main>
     </div>

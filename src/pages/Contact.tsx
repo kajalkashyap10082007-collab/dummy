@@ -20,14 +20,14 @@ export function Contact() {
   const contactSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Clothify | Customer Support & Inquiries",
-    "description": "Get in touch with Clothify for any questions about our premium clothing, ethical fashion practices, or your orders. We're here to help!",
-    "url": "https://clothify.netlify.app/contact-clothify"
+    "name": "Contact Clothify | Customer Support",
+    "description": "Have questions about Clothify, products, orders or support? Contact our team and we'll be happy to help.",
+    "url": "https://dummy-mauve.vercel.app/contact-clothify"
   });
 
  return (
  <div className="bg-blue-50 min-h-screen py-16 relative overflow-hidden">
-  <SEO title="Contact Clothify | Customer Support & Inquiries" description="Get in touch with Clothify for any questions about our premium clothing, ethical fashion practices, or your orders. We're here to help!" schemaMarkup={contactSchema} canonicalUrl="https://clothify.netlify.app/contact-clothify" />
+  <SEO title="Contact Clothify | Customer Support" description="Have questions about Clothify, products, orders or support? Contact our team and we'll be happy to help." schemaMarkup={contactSchema} canonicalUrl="https://dummy-mauve.vercel.app/contact-clothify" />
   {/* Decorative background blobs */}
   <div className="absolute top-10 left-10 w-[40vw] h-[40vw] bg-teal-100/40 rounded-full blur-3xl pointer-events-none"></div>
   <div className="absolute bottom-10 right-10 w-[50vw] h-[50vw] bg-amber-100/40 rounded-full blur-3xl pointer-events-none"></div>
@@ -39,7 +39,7 @@ export function Contact() {
  animate={{ opacity: 1, y: 0 }}
  className="text-4xl md:text-5xl font-bold font-serif text-zinc-900 mb-4"
  >
- Contact Clothify Support
+ Contact Clothify
  </motion.h1>
  <motion.p 
  initial={{ opacity: 0, y: 10 }}
@@ -101,7 +101,10 @@ export function Contact() {
  <div className="w-full h-64 bg-zinc-100 rounded-sm relative overflow-hidden group">
  <img 
  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&fm=webp&w=800" 
- alt="Clothify customer support team ready to help" 
+ alt="City map near the Clothify store" 
+ width="800"
+ height="400"
+ decoding="async"
  loading="lazy"
  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
  className="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 transition-opacity duration-500"

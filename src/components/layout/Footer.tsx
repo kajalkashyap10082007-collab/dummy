@@ -16,15 +16,15 @@ export function Footer() {
               Premium clothing and sustainable fashion for the modern wardrobe. Quality meets style.
             </p>
             <div className="flex items-center space-x-4 pt-4">
-              <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+              <span aria-label="Facebook profile unavailable" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500">
                 <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-colors">
+              </span>
+              <span aria-label="Instagram profile unavailable" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500">
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" aria-label="Twitter" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors">
+              </span>
+              <span aria-label="Twitter profile unavailable" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500">
                 <Twitter className="w-5 h-5" />
-              </a>
+              </span>
             </div>
           </div>
 
@@ -51,10 +51,10 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               <li><Link to="/contact-clothify" className="hover:text-blue-400 transition-colors inline-block text-sm">Contact Us</Link></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors inline-block text-sm">Shipping Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors inline-block text-sm">Returns & Exchanges</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors inline-block text-sm">Size Guide</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors inline-block text-sm">FAQ</a></li>
+              <li><span className="text-zinc-500 inline-block text-sm">Shipping Policy</span></li>
+              <li><span className="text-zinc-500 inline-block text-sm">Returns & Exchanges</span></li>
+              <li><span className="text-zinc-500 inline-block text-sm">Size Guide</span></li>
+              <li><span className="text-zinc-500 inline-block text-sm">FAQ</span></li>
             </ul>
           </div>
 
@@ -101,8 +101,8 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Clothify. All rights reserved.
           </p>
           <div className="flex gap-4 text-sm text-zinc-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <span className="text-zinc-500">Privacy Policy</span>
+            <span className="text-zinc-500">Terms of Service</span>
           </div>
         </div>
       </div>

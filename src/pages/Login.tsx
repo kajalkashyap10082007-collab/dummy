@@ -41,22 +41,22 @@ export function Login() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
             <div>
-              <label className="block text-sm font-bold text-zinc-700 mb-1">Full Name</label>
-              <input required name="name" type="text" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
+              <label htmlFor="login-name" className="block text-sm font-bold text-zinc-700 mb-1">Full Name</label>
+              <input id="login-name" required name="name" type="text" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
             </div>
           )}
           <div>
-            <label className="block text-sm font-bold text-zinc-700 mb-1">Email Address</label>
-            <input required name="email" type="email" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
+            <label htmlFor="login-email" className="block text-sm font-bold text-zinc-700 mb-1">Email Address</label>
+            <input id="login-email" required name="email" type="email" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
           </div>
           <div>
-            <label className="block text-sm font-bold text-zinc-700 mb-1">Password</label>
-            <input required name="password" type="password" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
+            <label htmlFor="login-password" className="block text-sm font-bold text-zinc-700 mb-1">Password</label>
+            <input id="login-password" required name="password" type="password" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
           </div>
           {!isLogin && (
             <div>
-              <label className="block text-sm font-bold text-zinc-700 mb-1">Confirm Password</label>
-              <input required name="confirmPassword" type="password" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
+              <label htmlFor="login-confirm-password" className="block text-sm font-bold text-zinc-700 mb-1">Confirm Password</label>
+              <input id="login-confirm-password" required name="confirmPassword" type="password" onChange={handleChange} className="w-full border p-3 rounded-md focus:ring-2 focus:ring-blue-700 outline-none transition-all" />
             </div>
           )}
 

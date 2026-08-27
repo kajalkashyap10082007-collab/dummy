@@ -44,7 +44,9 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
           {/* Primary Image */}
           <img 
             src={product.image} 
-            alt={product.name} 
+            alt={product.imageAlt || `${product.category} ${product.name}`} 
+            width="900"
+            height="1125"
             loading="lazy"
             onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
             className={"absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 " + (product.hoverImage ? 'group-hover:opacity-0' : 'group-hover:scale-105')}
@@ -53,7 +55,10 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
           {product.hoverImage && (
             <img 
               src={product.hoverImage} 
-              alt={product.name + " alternate view"} 
+              alt=""
+              aria-hidden="true"
+              width="900"
+              height="1125"
               loading="lazy"
               onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&fm=webp&w=800' }}
               className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
@@ -81,7 +86,7 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
         </div>
 
         {/* Favorite Button */}
-        <button aria-label="Add to favorites" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(); }} className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-md rounded-full text-zinc-500 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:text-blue-700 hover:scale-110 shadow-sm translate-y-[-10px] group-hover:translate-y-0 min-w-[40px] min-h-[40px] flex items-center justify-center">
+        <button aria-label={isWishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`} aria-pressed={isWishlisted} onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(); }} className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-md rounded-full text-zinc-500 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:text-blue-700 hover:scale-110 shadow-sm translate-y-[-10px] group-hover:translate-y-0 min-w-[40px] min-h-[40px] flex items-center justify-center">
           <Heart className={"w-4 h-4 " + (isWishlisted ? "fill-current text-blue-700" : "")} />
         </button>
 

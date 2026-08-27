@@ -4,18 +4,16 @@ import { SEO } from '../components/SEO';
 export function About() {
   const aboutSchema = JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "mainEntity": {
-      "@type": "Organization",
-      "name": "Clothify",
-      "description": "Ethical and Sustainable Premium Fashion Clothing",
-      "url": "https://clothify.netlify.app/"
-    }
+    "@graph": [
+      { "@type": "AboutPage", "name": "About Clothify", "url": "https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion" },
+      { "@type": "Organization", "name": "Clothify", "description": "Affordable and sustainable fashion clothing for men, women, and kids.", "url": "https://dummy-mauve.vercel.app/" },
+      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dummy-mauve.vercel.app/" }, { "@type": "ListItem", "position": 2, "name": "About", "item": "https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion" }] }
+    ]
   });
 
  return (
  <div className="bg-blue-50 min-h-screen relative overflow-hidden">
-  <SEO title="About Clothify | Ethical & Sustainable Premium Fashion" description="Learn about Clothify's commitment to quality, sustainable, and ethical premium fashion clothing for men, women, and kids." schemaMarkup={aboutSchema} canonicalUrl="https://clothify.netlify.app/about-clothify-sustainable-fashion" />
+  <SEO title="About Clothify - Affordable & Sustainable Fashion" description="Learn about Clothify and our mission to make stylish, affordable and quality fashion accessible for men, women and kids." schemaMarkup={aboutSchema} canonicalUrl="https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion" />
   {/* Decorative background blobs */}
   <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-teal-50/50 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
   <div className="absolute bottom-0 right-0 w-[60vw] h-[60vw] bg-amber-50/50 rounded-full blur-3xl translate-y-1/4 translate-x-1/4 pointer-events-none"></div>
@@ -28,7 +26,7 @@ export function About() {
  animate={{ opacity: 1, y: 0 }}
  className="text-4xl md:text-5xl font-bold font-serif mb-6 text-zinc-900 "
  >
- About Clothify: Ethical & Sustainable Premium Fashion
+ About Clothify: Affordable & Sustainable Fashion
  </h1>
  <motion.p 
  initial={{ opacity: 0, y: 10 }}
@@ -53,6 +51,9 @@ export function About() {
  <img 
  src="https://images.unsplash.com/photo-1560243563-062bfc001d68?auto=format&fit=crop&q=80&fm=webp&w=800" 
  alt="Clothify team working on ethical sustainable fashion" 
+ width="800"
+ height="600"
+ decoding="async"
  loading="lazy"
  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
  className="w-full h-auto object-cover rounded-sm"
@@ -114,6 +115,9 @@ export function About() {
  <img 
  src={member.image} 
  alt={member.name} 
+ width="800"
+ height="800"
+ decoding="async"
  loading="lazy"
  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 

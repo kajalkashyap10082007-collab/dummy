@@ -37,7 +37,7 @@ export function Cart() {
             {cart.map((item, index) => (
               <div key={`${item.product.id}-${item.size}-${item.color}-${index}`} className="flex py-6 border-b border-zinc-200 gap-6">
                 <Link to={`/product/${item.product.id}`} className="w-24 h-32 flex-shrink-0 rounded-md overflow-hidden bg-zinc-100">
-                  <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover object-top" />
+                  <img src={item.product.image} alt={item.product.imageAlt || `${item.product.category} ${item.product.name}`} width="96" height="128" className="w-full h-full object-cover object-top" />
                 </Link>
                 
                 <div className="flex-1 flex flex-col">

@@ -63,10 +63,10 @@ export function Checkout() {
             <section>
               <h2 className="text-xl font-bold mb-4">Contact Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input required name="firstName" placeholder="First Name" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
-                <input required name="lastName" placeholder="Last Name" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
-                <input required name="email" type="email" placeholder="Email Address" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all md:col-span-2" />
-                <input required name="phone" type="tel" placeholder="Phone Number" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all md:col-span-2" />
+                <input required name="firstName" aria-label="First Name" placeholder="First Name" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
+                <input required name="lastName" aria-label="Last Name" placeholder="Last Name" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
+                <input required name="email" type="email" aria-label="Email Address" placeholder="Email Address" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all md:col-span-2" />
+                <input required name="phone" type="tel" aria-label="Phone Number" placeholder="Phone Number" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all md:col-span-2" />
               </div>
             </section>
 
@@ -74,10 +74,10 @@ export function Checkout() {
             <section>
               <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input required name="address" placeholder="Street Address" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all md:col-span-2" />
-                <input required name="city" placeholder="City" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
-                <input required name="state" placeholder="State" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
-                <input required name="pincode" placeholder="Pincode" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
+                <input required name="address" aria-label="Street Address" placeholder="Street Address" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all md:col-span-2" />
+                <input required name="city" aria-label="City" placeholder="City" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
+                <input required name="state" aria-label="State" placeholder="State" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
+                <input required name="pincode" aria-label="Pincode" placeholder="Pincode" onChange={handleChange} className="border p-3 rounded-md focus:ring-2 focus:ring-slate-900 outline-none transition-all" />
               </div>
             </section>
 
@@ -111,7 +111,7 @@ export function Checkout() {
               {cart.map((item, i) => (
                 <div key={i} className="flex gap-4">
                   <div className="relative w-16 h-20 rounded-md overflow-hidden bg-zinc-200 flex-shrink-0">
-                    <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                    <img src={item.product.image} alt={item.product.imageAlt || `${item.product.category} ${item.product.name}`} width="64" height="80" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                     <span className="absolute top-0 right-0 bg-zinc-900 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-bl-md">{item.quantity}</span>
                   </div>
                   <div className="flex-1 text-sm">

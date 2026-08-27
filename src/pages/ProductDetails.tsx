@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { products } from '../data';
 import { useStore } from '../store';
 import { useToast } from '../components/Toast';
+import { SEO } from '../components/SEO';
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -36,6 +37,14 @@ export function ProductDetails() {
       </div>
     );
   }
+
+  const productSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Product", "name": product.name, "description": product.description, "image": product.images || [product.image], "category": product.category, "offers": { "@type": "Offer", "url": `https://dummy-mauve.vercel.app/product/${product.id}`, "priceCurrency": "INR", "price": product.price, "availability": "https://schema.org/InStock" } },
+      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dummy-mauve.vercel.app/" }, { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://dummy-mauve.vercel.app/products" }, { "@type": "ListItem", "position": 3, "name": product.name, "item": `https://dummy-mauve.vercel.app/product/${product.id}` }] }
+    ]
+  });
 
   const handleAddToCart = () => {
     if (product.sizes && product.sizes.length > 0 && !selectedSize) {
@@ -77,6 +86,7 @@ export function ProductDetails() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO title={`${product.name} | Clothify`} description={product.description || `Shop ${product.name} at Clothify.`} schemaMarkup={productSchema} canonicalUrl={`https://dummy-mauve.vercel.app/product/${product.id}`} ogType="product" ogImage={product.image} />
       <button aria-label="Go back" onClick={() => navigate(-1)} className="flex items-center text-zinc-600 hover:text-blue-700 mb-8 transition-colors min-h-[44px]">
         <ArrowLeft className="w-4 h-4 mr-2" /> Back
       </button>
@@ -91,7 +101,7 @@ export function ProductDetails() {
                 onClick={() => setActiveImage(img)}
                 className={`w-20 h-24 md:w-24 md:h-32 flex-shrink-0 border-2 overflow-hidden rounded-md ${activeImage === img ? 'border-blue-700' : 'border-transparent'}`}
               >
-                <img src={img} alt={`${product.name} thumbnail ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                <img src={img} alt={`${product.imageAlt || `${product.category} ${product.name}`} thumbnail ${i + 1}`} width="96" height="128" className="w-full h-full object-cover" loading="lazy" decoding="async" />
               </button>
             ))}
           </div>
@@ -104,7 +114,9 @@ export function ProductDetails() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 src={activeImage}
-                alt={product.name}
+                alt={product.imageAlt || `${product.category} ${product.name}`}
+                width="900"
+                height="1125"
                 className="w-full h-full object-cover object-top"
               />
             </AnimatePresence>

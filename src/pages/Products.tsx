@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { products } from '../data';
 import { Search, Filter, X, ChevronDown } from 'lucide-react';
@@ -8,7 +8,7 @@ import { SEO } from '../components/SEO';
 
 const CATEGORIES = ['All', 'Men', 'Women', 'Kids'];
 const SIZES = ['XS', 'S', 'M', 'L', 'XL'];
-const COLORS = ['Black', 'White', 'Navy', 'Beige'];
+const COLORS = ['Black', 'White', 'Navy', 'Sage'];
 
 export function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,7 +31,8 @@ export function Products() {
   const filteredProducts = useMemo(() => {
     let result = products.filter((p) => {
       const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
-      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const searchableText = `${p.name} ${p.category} ${p.colors?.join(' ')} ${p.description || ''}`.toLowerCase();
+      const matchesSearch = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean).every(term => searchableText.includes(term));
       const matchesPrice = p.price <= priceRange;
       const matchesSize = activeSizes.length === 0 || (p.sizes && p.sizes.some(s => activeSizes.includes(s)));
       const matchesColor = activeColors.length === 0 || (p.colors && p.colors.some(c => activeColors.includes(c)));
@@ -90,19 +91,22 @@ export function Products() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <SEO title="Shop Premium Clothing & Ethical Fashion | Clothify" description="Browse Clothify's extensive collection of premium clothing, ethical fashion, and sustainable apparel for men, women, and kids." canonicalUrl="https://clothify.netlify.app/products" />
+      <SEO title="Shop Affordable Fashion for Men, Women & Kids | Clothify" description="Shop affordable and trendy clothing for men, women and kids. Explore dresses, shirts, jeans, tops, kidswear and more at Clothify." schemaMarkup={JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "CollectionPage", "name": "Shop Affordable Fashion", "url": "https://dummy-mauve.vercel.app/products" }, { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dummy-mauve.vercel.app/" }, { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://dummy-mauve.vercel.app/products" }] }] })} canonicalUrl="https://dummy-mauve.vercel.app/products" />
       
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 space-y-4 md:space-y-0">
         <div>
-          <h1 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-zinc-900 mb-2">Shop Collection</h1>
+          <h1 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-zinc-900 mb-2">Shop Affordable Fashion</h1>
           <p className="text-zinc-500 font-medium">Showing {filteredProducts.length} items</p>
+          <Link to="/sustainable-fashion-blog" className="mt-3 inline-block text-sm font-bold text-blue-700 hover:underline">Read our fashion tips and styling ideas</Link>
         </div>
 
         <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
           {/* Search Box */}
           <div className="relative w-full md:w-64">
+            <label htmlFor="product-search" className="sr-only">Search products</label>
             <input 
+              id="product-search"
               type="text" 
               placeholder="Search products..." 
               value={searchQuery}
@@ -114,7 +118,9 @@ export function Products() {
           
           {/* Sort Dropdown */}
           <div className="relative border border-zinc-200 rounded-md bg-zinc-50 w-full sm:w-auto">
+            <label htmlFor="product-sort" className="sr-only">Sort products</label>
             <select 
+              id="product-sort"
               value={sortBy} 
               onChange={(e) => setSortBy(e.target.value)}
               className="appearance-none bg-transparent py-3 pl-4 pr-10 text-sm font-medium w-full outline-none cursor-pointer"

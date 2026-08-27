@@ -52,6 +52,7 @@ export const products: Product[] = catalog.flatMap(([category, names]) =>
       discount: Math.round(((originalPrice - price) / originalPrice) * 100),
       category: typedCategory,
       image,
+      imageAlt: `${typedCategory === 'Men' ? "Men's" : typedCategory === 'Women' ? "Women's" : "Kids'"} ${name.toLowerCase()}`,
       hoverImage,
       images: [image, hoverImage],
       description: `A comfortable ${name.toLowerCase()} made for everyday Indian style. Easy to wear, easy to love, and finished with a fit that moves with you.`,

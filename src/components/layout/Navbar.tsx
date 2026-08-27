@@ -167,26 +167,23 @@ export function Navbar() {
           <div className="flex items-center space-x-2">
             <span className="text-zinc-500 mr-2">Follow Us</span>
 
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="text-amber-500 hover:text-amber-400 transition-all hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            <span
+              aria-label="Instagram profile unavailable"
+              className="text-zinc-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <Instagram className="w-4 h-4" />
-            </a>
+            </span>
 
-            <a
-              href="#"
-              aria-label="Facebook"
-              className="text-amber-500 hover:text-amber-400 transition-all hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            <span
+              aria-label="Facebook profile unavailable"
+              className="text-zinc-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <Facebook className="w-4 h-4" />
-            </a>
+            </span>
 
-            <a
-              href="#"
-              aria-label="Twitter"
-              className="text-amber-500 hover:text-amber-400 transition-all hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            <span
+              aria-label="Twitter profile unavailable"
+              className="text-zinc-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +204,7 @@ export function Navbar() {
                 <path d="M14 13h.01" />
                 <path d="M9 10c0 2 1.5 3 4 4" />
               </svg>
-            </a>
+            </span>
           </div>
         </div>
       </div>
@@ -358,11 +355,14 @@ export function Navbar() {
                                     className="relative group overflow-hidden rounded-sm cursor-pointer flex-1"
                                     onClick={() => setHoveredMenu(null)}
                                   >
-                                    <Link to="/premium-clothing-collection">
+                                    <Link to="/products">
                                       <img
                                         src={img.url}
                                         alt={img.title}
+                                        width="400"
+                                        height="533"
                                         loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover aspect-[3/4] group-hover:scale-105 transition-transform duration-500"
                                       />
 

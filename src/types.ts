@@ -6,6 +6,7 @@ export interface Product {
   discount?: number;
   category: 'Men' | 'Women' | 'Kids' | 'Shoes' | 'Accessories';
   image: string;
+  imageAlt?: string;
   hoverImage?: string;
   images?: string[];
   description?: string;
