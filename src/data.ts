@@ -1,6 +1,72 @@
 import { BlogPost, Product, Testimonial } from './types';
 
-export const products: Product[] = [
+const imageUrl = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=82&fm=webp&w=900`;
+
+const productImages = {
+  Men: [
+    'photo-1521572163474-6864f9cf17ab', 'photo-1596755094514-f87e34085b2c',
+    'photo-1617127365659-c47fa864d8bc', 'photo-1551488831-00ddcb6c6bd3',
+    'photo-1516826957135-700dedea698c', 'photo-1551488831-00ddcb6c6bd3',
+    'photo-1548883354-94bcfe321cbb', 'photo-1593030761757-71fae46af508'
+  ],
+  Women: [
+    'photo-1595777457583-95e059d581b8', 'photo-1572804013309-59a88b7e92f1',
+    'photo-1485968579580-b6d095142e6e', 'photo-1551028719-00167b16eac5',
+    'photo-1496747611176-843222e1e57c', 'photo-1539109136881-3be0616acf4b',
+    'photo-1566174053879-31528523f8ae', 'photo-1515886657613-9f3515b0c78f'
+  ],
+  Kids: [
+    'photo-1503919545889-aef636e10ad4', 'photo-1519238263530-99bdd11df2ea',
+    'photo-1622290291468-a28f7a7dc6a8', 'photo-1518831959646-742c3a14ebf7',
+    'photo-1596870230751-ebdfce98ec42', 'photo-1621452773781-0f992fd1f5ba',
+    'photo-1519457431-44ccd64a579b', 'photo-1596870230751-ebdfce98ec42'
+  ]
+};
+
+type ClothingCategory = 'Men' | 'Women' | 'Kids';
+
+const catalog = [
+  ['Men', ['Essential Cotton T-Shirt', 'Oxford Casual Shirt', 'Slim Fit Dark Jeans', 'Relaxed Cargo Trousers', 'Everyday Zip Hoodie', 'Lightweight Denim Jacket', 'French Terry Sweatshirt', 'Weekend Polo T-Shirt', 'Classic Formal Shirt', 'Textured Resort Shirt', 'Tapered Blue Jeans', 'Comfort Chinos', 'Colourblock Hoodie', 'Linen Blend Shirt', 'Smart Casual Blazer', 'Essential Joggers']],
+  ['Women', ['Floral Midi Dress', 'Printed Cotton Kurti', 'Satin Party Dress', 'Everyday Ribbed Top', 'High Rise Straight Jeans', 'Floral Co-ord Set', 'Embroidered Anarkali', 'Festive Silk Saree', 'Pleated Western Dress', 'Relaxed Linen Shirt', 'Wrap Mini Dress', 'Soft Knit Top', 'Wide Leg Jeans', 'Printed Sharara Set', 'Ruched Party Top', 'Cotton A-Line Kurti']],
+  ['Kids', ['Dino Graphic T-Shirt', 'Checked Boys Shirt', 'Girls Cotton Dress', 'Stretch Kids Jeans', 'Colour Pop Hoodie', 'Mini Co-ord Set', 'Playtime Casual Set', 'Festive Kurta Set', 'Rainbow Sweatshirt', 'Boys Polo T-Shirt', 'Floral Party Dress', 'Soft Denim Overalls', 'Printed Joggers Set', 'Little Explorer Shirt', 'Festive Frock', 'Everyday Cotton Shorts Set']]
+] as const;
+
+const prices: Record<ClothingCategory, number[]> = {
+  Men: [399, 699, 999, 799, 899, 1299, 749, 599, 899, 799, 1099, 999, 999, 699, 1499, 699],
+  Women: [899, 599, 1199, 399, 1099, 999, 899, 1299, 999, 699, 799, 449, 1199, 999, 699, 499],
+  Kids: [299, 599, 799, 699, 899, 749, 599, 799, 699, 399, 799, 699, 599, 499, 649, 449]
+};
+
+export const products: Product[] = catalog.flatMap(([category, names]) =>
+  names.map((name, index) => {
+    const typedCategory = category as ClothingCategory;
+    const price = prices[typedCategory][index];
+    const originalPrice = price + (index % 3 === 0 ? 400 : index % 3 === 1 ? 300 : 250);
+    const image = imageUrl(productImages[typedCategory][index % productImages[typedCategory].length]);
+    const hoverImage = imageUrl(productImages[typedCategory][(index + 2) % productImages[typedCategory].length]);
+    return {
+      id: `${typedCategory.toLowerCase()}-${index + 1}`,
+      name,
+      price,
+      originalPrice,
+      discount: Math.round(((originalPrice - price) / originalPrice) * 100),
+      category: typedCategory,
+      image,
+      hoverImage,
+      images: [image, hoverImage],
+      description: `A comfortable ${name.toLowerCase()} made for everyday Indian style. Easy to wear, easy to love, and finished with a fit that moves with you.`,
+      sizes: typedCategory === 'Kids' ? ['2-3Y', '4-5Y', '6-7Y', '8-9Y'] : ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: ['Black', 'White', 'Navy', 'Sage'],
+      reviews: 34 + ((index * 47 + typedCategory.length * 9) % 260),
+      rating: Number((4.1 + ((index * 7) % 9) / 10).toFixed(1)),
+      isTrending: index % 4 === 0,
+      isNewArrival: index % 5 === 0
+    } satisfies Product;
+  })
+);
+
+/* Legacy products are intentionally replaced with the focused clothing catalog above. */
+/*
   {
     id: 'p1',
     name: 'Elegant Evening Gown',
@@ -226,6 +292,7 @@ export const products: Product[] = [
     isTrending: true
   }
 ];
+*/
 
 export const blogPosts: BlogPost[] = [
   {

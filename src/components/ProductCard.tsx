@@ -4,11 +4,11 @@ import { useStore } from '../store';
 import { useToast } from './Toast';
 import { motion } from 'motion/react';
 import { QuickView } from './QuickView';
-import { Heart, Star } from 'lucide-react';
+import { Heart, Star, ShoppingBag } from 'lucide-react';
 import { Product } from '../types';
 
 export function ProductCard({ product, ...props }: { product: Product } & React.HTMLAttributes<HTMLDivElement>) {
-  const { addToWishlist, removeFromWishlist, wishlist } = useStore();
+  const { addToWishlist, removeFromWishlist, wishlist, addToCart } = useStore();
   const { toast } = useToast();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
@@ -22,6 +22,11 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
       addToWishlist(product);
       toast('Added to wishlist ❤️', 'success');
     }
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product, product.sizes?.[0], product.colors?.[0]);
+    toast('Added to cart', 'success');
   };
 
   return (
@@ -59,13 +64,18 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.originalPrice && (
-            <div className="bg-blue-700 text-white text-[10px] font-black px-2.5 py-1 rounded-sm uppercase tracking-widest shadow-sm">
-              {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% Off
+            <div className="bg-rose-500 text-white text-[10px] font-black px-2.5 py-1 rounded-sm uppercase tracking-widest shadow-sm">
+              {product.discount ?? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% Off
             </div>
           )}
           {product.isTrending && (
             <div className="bg-white/95 backdrop-blur-sm text-blue-700 text-[10px] font-black px-2.5 py-1 rounded-sm uppercase tracking-widest shadow-sm border border-blue-100">
               Trending
+            </div>
+          )}
+          {product.isNewArrival && !product.isTrending && (
+            <div className="bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded-sm uppercase tracking-widest shadow-sm">
+              New
             </div>
           )}
         </div>
@@ -78,7 +88,7 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
         {/* Quick View Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-10">
           <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsQuickViewOpen(true); }} className="w-full bg-zinc-900/95 backdrop-blur-sm text-white py-3 rounded-sm text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg">
-            Quick Add
+            Quick View
           </button>
         </div>
       </div>
@@ -89,7 +99,7 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
           <span className="text-xs font-black uppercase tracking-widest text-blue-700">{product.category}</span>
           <div className="flex items-center text-yellow-500">
             <Star className="w-3 h-3 fill-current" />
-            <span className="text-[10px] ml-1 text-zinc-500 font-medium">{product.rating}</span>
+            <span className="text-[10px] ml-1 text-zinc-500 font-medium">{product.rating} ({product.reviews})</span>
           </div>
         </div>
         
@@ -103,6 +113,9 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
             <span className="text-xs text-zinc-500 line-through decoration-zinc-300">₹{product.originalPrice.toLocaleString('en-IN')}</span>
           )}
         </div>
+        <button onClick={handleAddToCart} className="mt-4 w-full min-h-[42px] rounded-md bg-zinc-900 text-white text-xs font-black uppercase tracking-widest transition-colors hover:bg-blue-700 flex items-center justify-center gap-2">
+          <ShoppingBag className="w-4 h-4" /> Add to Cart
+        </button>
       </div>
 
       <QuickView product={product} isOpen={isQuickViewOpen} onClose={() => setIsQuickViewOpen(false)} />

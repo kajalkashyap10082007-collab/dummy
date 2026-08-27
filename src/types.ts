@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   price: number;
   originalPrice?: number;
+  discount?: number;
   category: 'Men' | 'Women' | 'Kids' | 'Shoes' | 'Accessories';
   image: string;
   hoverImage?: string;

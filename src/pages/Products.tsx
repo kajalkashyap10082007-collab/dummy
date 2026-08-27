@@ -6,7 +6,7 @@ import { Search, Filter, X, ChevronDown } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { SEO } from '../components/SEO';
 
-const CATEGORIES = ['All', 'Women', 'Men', 'Kids', 'Shoes', 'Accessories'];
+const CATEGORIES = ['All', 'Men', 'Women', 'Kids'];
 const SIZES = ['XS', 'S', 'M', 'L', 'XL'];
 const COLORS = ['Black', 'White', 'Navy', 'Beige'];
 
@@ -14,6 +14,8 @@ export function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialCategory = searchParams.get('category') || 'All';
   const initialSearch = searchParams.get('search') || '';
+  const initialTrending = searchParams.get('trending') === 'true';
+  const initialDiscount = Number(searchParams.get('discount') || 0);
   
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -21,8 +23,10 @@ export function Products() {
   
   const [activeSizes, setActiveSizes] = useState<string[]>([]);
   const [activeColors, setActiveColors] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<number>(20000);
-  const [sortBy, setSortBy] = useState<string>('popular');
+  const [priceRange, setPriceRange] = useState<number>(2000);
+  const [minimumRating, setMinimumRating] = useState<number>(0);
+  const [minimumDiscount, setMinimumDiscount] = useState<number>(initialDiscount);
+  const [sortBy, setSortBy] = useState<string>(searchParams.get('newest') === 'true' ? 'newest' : 'popular');
 
   const filteredProducts = useMemo(() => {
     let result = products.filter((p) => {
@@ -31,8 +35,12 @@ export function Products() {
       const matchesPrice = p.price <= priceRange;
       const matchesSize = activeSizes.length === 0 || (p.sizes && p.sizes.some(s => activeSizes.includes(s)));
       const matchesColor = activeColors.length === 0 || (p.colors && p.colors.some(c => activeColors.includes(c)));
+      const discount = p.originalPrice ? ((p.originalPrice - p.price) / p.originalPrice) * 100 : 0;
+      const matchesRating = p.rating >= minimumRating;
+      const matchesDiscount = discount >= minimumDiscount;
+      const matchesTrending = !initialTrending || p.isTrending;
       
-      return matchesCategory && matchesSearch && matchesPrice && matchesSize && matchesColor;
+      return matchesCategory && matchesSearch && matchesPrice && matchesSize && matchesColor && matchesRating && matchesDiscount && matchesTrending;
     });
 
     switch (sortBy) {
@@ -48,7 +56,7 @@ export function Products() {
       default:
         return result.sort((a, b) => (b.reviews || 0) - (a.reviews || 0));
     }
-  }, [activeCategory, searchQuery, activeSizes, activeColors, priceRange, sortBy]);
+  }, [activeCategory, searchQuery, activeSizes, activeColors, priceRange, minimumRating, minimumDiscount, initialTrending, sortBy]);
 
   const handleCategoryChange = (cat: string) => {
     setActiveCategory(cat);
@@ -73,7 +81,9 @@ export function Products() {
     setSearchQuery('');
     setActiveSizes([]);
     setActiveColors([]);
-    setPriceRange(20000);
+    setPriceRange(2000);
+    setMinimumRating(0);
+    setMinimumDiscount(0);
     setSortBy('popular');
     setSearchParams({});
   };
@@ -109,7 +119,7 @@ export function Products() {
               onChange={(e) => setSortBy(e.target.value)}
               className="appearance-none bg-transparent py-3 pl-4 pr-10 text-sm font-medium w-full outline-none cursor-pointer"
             >
-              <option value="popular">Popular</option>
+              <option value="popular">Recommended</option>
               <option value="newest">Newest</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
@@ -131,7 +141,13 @@ export function Products() {
 
       <div className="flex flex-col md:flex-row gap-12">
         {/* Desktop Sidebar Filters */}
-        
+        <aside className="hidden md:block w-56 shrink-0 space-y-8">
+          <div><h3 className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-4">Category</h3><div className="space-y-2">{CATEGORIES.map(cat => <button key={cat} onClick={() => handleCategoryChange(cat)} className={`block w-full text-left text-sm py-2 ${activeCategory === cat ? 'text-blue-700 font-bold' : 'text-zinc-600 hover:text-zinc-900'}`}>{cat}</button>)}</div></div>
+          <div><div className="flex justify-between text-xs font-black uppercase tracking-widest text-zinc-500 mb-3"><span>Price</span><span className="text-blue-700">₹{priceRange.toLocaleString('en-IN')}</span></div><input type="range" min="200" max="2000" step="50" value={priceRange} onChange={e => setPriceRange(Number(e.target.value))} className="w-full accent-blue-700" /><div className="flex justify-between text-xs text-zinc-400 mt-1"><span>₹200</span><span>₹2,000</span></div></div>
+          <div><h3 className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-3">Size</h3><div className="flex flex-wrap gap-2">{SIZES.map(size => <button key={size} onClick={() => toggleSize(size)} className={`w-10 h-9 border text-xs font-bold rounded ${activeSizes.includes(size) ? 'bg-blue-700 text-white border-blue-700' : 'border-zinc-200 text-zinc-600'}`}>{size}</button>)}</div></div>
+          <div><h3 className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-3">Rating</h3>{[4, 4.5].map(rating => <button key={rating} onClick={() => setMinimumRating(rating)} className={`block text-sm py-1 ${minimumRating === rating ? 'text-blue-700 font-bold' : 'text-zinc-600'}`}>{rating}+ stars</button>)}</div>
+          <div><h3 className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-3">Discount</h3>{[20, 30, 40].map(discount => <button key={discount} onClick={() => setMinimumDiscount(discount)} className={`block text-sm py-1 ${minimumDiscount === discount ? 'text-blue-700 font-bold' : 'text-zinc-600'}`}>{discount}% or more</button>)}</div>
+        </aside>
 
         {/* Product Grid */}
         <div className="flex-1">
@@ -210,7 +226,7 @@ export function Products() {
                     <span className="text-xs font-bold text-blue-700">₹{priceRange.toLocaleString()}</span>
                   </div>
                   <input 
-                    type="range" min="0" max="20000" step="500" value={priceRange} 
+                    type="range" min="200" max="2000" step="50" value={priceRange} 
                     onChange={(e) => setPriceRange(Number(e.target.value))}
                     className="w-full accent-blue-700"
                   />
