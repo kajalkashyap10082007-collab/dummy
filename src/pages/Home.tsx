@@ -33,6 +33,8 @@ const HERO_SLIDES = [
   }
 ];
 
+const heroSrcSet = (image: string) => image.replace('w=1920', 'w=480') + ' 480w, ' + image.replace('w=1920', 'w=768') + ' 768w, ' + image.replace('w=1920', 'w=1200') + ' 1200w, ' + image + ' 1920w';
+
 export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -94,10 +96,14 @@ export function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10" />
             <img 
               src={HERO_SLIDES[currentSlide].image} 
+              srcSet={heroSrcSet(HERO_SLIDES[currentSlide].image)}
+              sizes="100vw"
               alt="Clothify affordable fashion collection"
               width="1920"
               height="600"
               loading={currentSlide === 0 ? 'eager' : 'lazy'}
+              fetchPriority={currentSlide === 0 ? 'high' : 'auto'}
+              decoding="async"
               onError={(e) => { e.currentTarget.src = HERO_SLIDES[currentSlide].fallback }}
               className="w-full h-full object-cover object-top"
             />
@@ -203,7 +209,7 @@ export function Home() {
             </Link>
           </div>
           <div className="md:w-1/2 min-h-[300px] relative">
-              <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000" alt="Blue denim collection" width="1000" height="667" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000" srcSet="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=768 768w, https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000 1000w" sizes="(max-width: 767px) 100vw, 50vw" alt="Blue denim collection" width="1000" height="667" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
           </div>
         </div>
 
@@ -233,7 +239,7 @@ export function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link to="/products?category=Men" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" alt="Men's cotton t-shirts" width="800" height="1000" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Men's cotton t-shirts" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
                   <h3 className="text-white text-2xl font-black mb-1">T-Shirts</h3>
@@ -242,7 +248,7 @@ export function Home() {
               </div>
             </Link>
             <Link to="/products?category=Women" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" alt="Women's evening dresses" width="800" height="1000" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Women's evening dresses" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
                   <h3 className="text-white text-2xl font-black mb-1">Dresses</h3>
@@ -251,7 +257,7 @@ export function Home() {
               </div>
             </Link>
             <Link to="/products?category=Kids" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800" alt="Kids' fashion accessories" width="800" height="1000" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Kids' fashion accessories" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
                   <h3 className="text-white text-2xl font-black mb-1">Accessories</h3>

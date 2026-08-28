@@ -236,7 +236,7 @@ export function Navbar() {
               <Link
                 to="/"
                 aria-label="Clothify Home"
-                className="flex items-center space-x-2 text-2xl font-black tracking-tighter text-zinc-900 group"
+                className="flex items-center space-x-2 text-2xl max-[374px]:text-xl font-black tracking-tighter text-zinc-900 group"
               >
                 <div className="w-8 h-8 bg-blue-700 text-white rounded flex items-center justify-center -rotate-6 group-hover:rotate-0 transition-transform">
                   <ShoppingBag className="w-5 h-5 fill-white/20" />

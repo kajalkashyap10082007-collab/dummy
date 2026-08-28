@@ -44,10 +44,13 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
           {/* Primary Image */}
           <img 
             src={product.image} 
+            srcSet={product.image.replace('w=900', 'w=480') + ' 480w, ' + product.image.replace('w=900', 'w=768') + ' 768w, ' + product.image + ' 900w'}
+            sizes="(max-width: 767px) 50vw, (max-width: 1279px) 25vw, 225px"
             alt={product.imageAlt || `${product.category} ${product.name}`} 
             width="900"
             height="1125"
             loading="lazy"
+            decoding="async"
             onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
             className={"absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 " + (product.hoverImage ? 'group-hover:opacity-0' : 'group-hover:scale-105')}
           />
@@ -55,6 +58,8 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
           {product.hoverImage && (
             <img 
               src={product.hoverImage} 
+              srcSet={product.hoverImage.replace('w=900', 'w=480') + ' 480w, ' + product.hoverImage.replace('w=900', 'w=768') + ' 768w, ' + product.hoverImage + ' 900w'}
+              sizes="(max-width: 767px) 50vw, (max-width: 1279px) 25vw, 225px"
               alt=""
               aria-hidden="true"
               width="900"
