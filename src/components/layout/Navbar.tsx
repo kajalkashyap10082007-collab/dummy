@@ -165,25 +165,22 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center space-x-2">
-            <span className="text-zinc-500 mr-2">Follow Us</span>
+            <span className="text-zinc-400 mr-2">Follow Us</span>
 
             <span
-              aria-label="Instagram profile unavailable"
-              className="text-zinc-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="text-zinc-400 min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
-              <Instagram className="w-4 h-4" />
+              <Instagram aria-hidden="true" className="w-4 h-4" />
             </span>
 
             <span
-              aria-label="Facebook profile unavailable"
-              className="text-zinc-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="text-zinc-400 min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
-              <Facebook className="w-4 h-4" />
+              <Facebook aria-hidden="true" className="w-4 h-4" />
             </span>
 
             <span
-              aria-label="Twitter profile unavailable"
-              className="text-zinc-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="text-zinc-400 min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -195,6 +192,7 @@ export function Navbar() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                aria-hidden="true"
                 className="w-4 h-4"
               >
                 <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
@@ -406,13 +404,13 @@ export function Navbar() {
                   onChange={(e) =>
                     setSearchQuery(e.target.value)
                   }
-                  className="bg-transparent border-none outline-none text-sm w-64 focus:w-80 transition-all"
+                  className="bg-transparent border-none outline-none text-sm w-64 focus:w-80 min-h-11 transition-all"
                 />
 
                 <button
                   type="submit"
                   aria-label="Search"
-                  className="text-zinc-500 hover:text-blue-700"
+                  className="text-zinc-500 hover:text-blue-700 min-w-11 min-h-11 flex items-center justify-center"
                 >
                   <Search className="w-4 h-4" />
                 </button>

@@ -167,7 +167,7 @@ export function Home() {
             <button
               key={i}
               onClick={() => setCurrentSlide(i)}
-              className={"w-2.5 h-2.5 rounded-full transition-all " + (i === currentSlide ? "bg-blue-700 w-8" : "bg-white/50 hover:bg-white")}
+              className={"w-2.5 h-2.5 min-w-11 min-h-11 p-3 bg-clip-content rounded-full transition-all " + (i === currentSlide ? "bg-blue-700 w-8" : "bg-white/50 hover:bg-white")}
               aria-label={"Go to slide " + (i + 1)}
             />
           ))}

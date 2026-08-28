@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -12,18 +12,18 @@ export function Footer() {
             <Link to="/" className="text-3xl font-black tracking-tighter text-white inline-block mb-2">
               CLOTHIFY<span className="text-blue-500">.</span>
             </Link>
-            <p className="text-sm leading-relaxed text-zinc-400">
+            <p className="text-sm leading-relaxed text-zinc-300">
               Premium clothing and sustainable fashion for the modern wardrobe. Quality meets style.
             </p>
             <div className="flex items-center space-x-4 pt-4">
-              <span aria-label="Facebook profile unavailable" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500">
-                <Facebook className="w-5 h-5" />
+              <span className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400">
+                <Facebook aria-hidden="true" className="w-5 h-5" />
               </span>
-              <span aria-label="Instagram profile unavailable" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500">
-                <Instagram className="w-5 h-5" />
+              <span className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400">
+                <Instagram aria-hidden="true" className="w-5 h-5" />
               </span>
-              <span aria-label="Twitter profile unavailable" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500">
-                <Twitter className="w-5 h-5" />
+              <span className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400">
+                <Twitter aria-hidden="true" className="w-5 h-5" />
               </span>
             </div>
           </div>
@@ -51,10 +51,10 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               <li><Link to="/contact-clothify" className="hover:text-blue-400 transition-colors inline-block text-sm">Contact Us</Link></li>
-              <li><span className="text-zinc-500 inline-block text-sm">Shipping Policy</span></li>
-              <li><span className="text-zinc-500 inline-block text-sm">Returns & Exchanges</span></li>
-              <li><span className="text-zinc-500 inline-block text-sm">Size Guide</span></li>
-              <li><span className="text-zinc-500 inline-block text-sm">FAQ</span></li>
+              <li><span className="text-zinc-300 inline-block text-sm">Shipping Policy</span></li>
+              <li><span className="text-zinc-300 inline-block text-sm">Returns & Exchanges</span></li>
+              <li><span className="text-zinc-300 inline-block text-sm">Size Guide</span></li>
+              <li><span className="text-zinc-300 inline-block text-sm">FAQ</span></li>
             </ul>
           </div>
 
@@ -97,12 +97,12 @@ export function Footer() {
         </div>
 
         <div className="border-t border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-zinc-500 text-center md:text-left">
+          <p className="text-sm text-zinc-300 text-center md:text-left">
             &copy; {new Date().getFullYear()} Clothify. All rights reserved.
           </p>
-          <div className="flex gap-4 text-sm text-zinc-500">
-            <span className="text-zinc-500">Privacy Policy</span>
-            <span className="text-zinc-500">Terms of Service</span>
+          <div className="flex gap-4 text-sm text-zinc-300">
+            <span className="text-zinc-300">Privacy Policy</span>
+            <span className="text-zinc-300">Terms of Service</span>
           </div>
         </div>
       </div>
