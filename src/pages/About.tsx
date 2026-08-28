@@ -21,13 +21,13 @@ export function About() {
  {/* Hero */}
  <section className="relative py-24 border-b border-zinc-200 ">
  <div className="max-w-4xl mx-auto px-4 text-center">
- <h1 
+ <motion.h1 
  initial={{ opacity: 0, y: 10 }}
  animate={{ opacity: 1, y: 0 }}
  className="text-4xl md:text-5xl font-bold font-serif mb-6 text-zinc-900 "
  >
  About Clothify: Affordable & Sustainable Fashion
- </h1>
+ </motion.h1>
  <motion.p 
  initial={{ opacity: 0, y: 10 }}
  animate={{ opacity: 1, y: 0 }}

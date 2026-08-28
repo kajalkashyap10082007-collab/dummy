@@ -223,6 +223,8 @@ export function Navbar() {
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 aria-label="Open mobile menu"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation"
                 className="p-2 text-zinc-600 hover:text-blue-700 min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <Menu className="w-6 h-6" />
@@ -496,6 +498,10 @@ export function Navbar() {
                   duration: 0.4
                 }}
                 className="fixed inset-y-0 left-0 w-[80%] max-w-sm bg-white shadow-xl z-50 p-6 flex flex-col md:hidden"
+                id="mobile-navigation"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile navigation"
               >
                 <div className="flex items-center justify-between mb-8">
                   <Link
@@ -540,31 +546,33 @@ export function Navbar() {
 
                 <div className="mt-auto border-t border-zinc-100 pt-6">
                   <div className="space-y-4">
-                    <div
+                    <button
+                      type="button"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         navigate('/wishlist');
                       }}
-                      className="flex items-center space-x-4 text-zinc-600 hover:text-blue-700 transition-colors cursor-pointer"
+                      className="flex items-center space-x-4 text-zinc-600 hover:text-blue-700 transition-colors cursor-pointer text-left"
                     >
                       <Heart className="w-5 h-5" />
                       <span className="font-bold tracking-widest uppercase">
                         Wishlist
                       </span>
-                    </div>
+                    </button>
 
-                    <div
+                    <button
+                      type="button"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         navigate(user ? '/' : '/login');
                       }}
-                      className="flex items-center space-x-4 text-zinc-600 hover:text-blue-700 transition-colors cursor-pointer"
+                      className="flex items-center space-x-4 text-zinc-600 hover:text-blue-700 transition-colors cursor-pointer text-left"
                     >
                       <User className="w-5 h-5" />
                       <span className="font-bold tracking-widest uppercase">
                         {user ? 'My Account' : 'Sign In'}
                       </span>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </motion.div>

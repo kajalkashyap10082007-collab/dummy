@@ -42,7 +42,6 @@ export function Home() {
   
   const newArrivals = products.filter(p => p.isTrending).slice(0, 4);
   const bestSellers = products.filter(p => p.rating >= 4.5).slice(0, 4);
-  const saleProducts = products.filter(p => p.originalPrice).slice(0, 4);
   const homeSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [

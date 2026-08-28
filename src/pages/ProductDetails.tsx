@@ -114,9 +114,14 @@ export function ProductDetails() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 src={activeImage}
+                srcSet={`${activeImage.replace('w=900', 'w=480')} 480w, ${activeImage.replace('w=900', 'w=768')} 768w, ${activeImage} 900w`}
+                sizes="(max-width: 1023px) 100vw, 50vw"
                 alt={product.imageAlt || `${product.category} ${product.name}`}
                 width="900"
                 height="1125"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover object-top"
               />
             </AnimatePresence>

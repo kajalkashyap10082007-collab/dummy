@@ -80,8 +80,10 @@ export function Footer() {
             </div>
             
             <form onSubmit={(e) => e.preventDefault()} className="flex">
+              <label htmlFor="footer-email" className="sr-only">Email address</label>
               <input 
                 type="email" 
+                id="footer-email"
                 placeholder="Your email address" 
                 className="bg-zinc-800 border-none text-white px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-700 text-sm rounded-l-sm"
                 required

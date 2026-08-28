@@ -29,6 +29,7 @@ export function SEO({ title, description, schemaMarkup, canonicalUrl, ogType = '
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl || window.location.href);
     setMeta('meta[property="og:type"]', 'property', 'og:type', ogType);
+    setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'Clothify');
     setMeta('meta[property="og:image"]', 'property', 'og:image', ogImage);
     setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
