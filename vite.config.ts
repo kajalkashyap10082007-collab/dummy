@@ -35,17 +35,20 @@ export default defineConfig(() => {
       // Code splitting strategy for optimal caching
       rollupOptions: {
         output: {
-          manualChunks: {
+          manualChunks: (id) => {
             // Vendor dependencies
-            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-            'vendor-motion': ['motion/react'],
-            'vendor-ui': ['lucide-react'],
-            'vendor-utils': ['zustand', 'clsx', 'tailwind-merge'],
-            // Feature-based chunks
-            'pages-shop': ['src/pages/Products', 'src/pages/ProductDetails'],
-            'pages-cart': ['src/pages/Cart', 'src/pages/Checkout', 'src/pages/OrderConfirmation'],
-            'pages-account': ['src/pages/Login'],
-            'pages-info': ['src/pages/About', 'src/pages/Blog', 'src/pages/Contact'],
+            if (id.includes('node_modules/react')) {
+              return 'vendor-react';
+            }
+            if (id.includes('node_modules/motion')) {
+              return 'vendor-motion';
+            }
+            if (id.includes('node_modules/lucide-react')) {
+              return 'vendor-ui';
+            }
+            if (id.includes('node_modules/zustand') || id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge')) {
+              return 'vendor-utils';
+            }
           },
           chunkFileNames: 'assets/[name]-[hash].js',
           entryFileNames: 'assets/[name]-[hash].js',
