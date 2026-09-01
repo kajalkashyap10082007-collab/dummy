@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store';
 import { useToast } from './Toast';
@@ -7,7 +7,7 @@ import { QuickView } from './QuickView';
 import { Heart, Star, ShoppingBag } from 'lucide-react';
 import { Product } from '../types';
 
-export function ProductCard({ product, ...props }: { product: Product } & React.HTMLAttributes<HTMLDivElement>) {
+function ProductCardComponent({ product, ...props }: { product: Product } & React.HTMLAttributes<HTMLDivElement>) {
   const { addToWishlist, removeFromWishlist, wishlist, addToCart } = useStore();
   const { toast } = useToast();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
@@ -32,11 +32,10 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
   return (
     <motion.div 
       {...(props as any)}
-      layout
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.3 }}
       className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-zinc-100"
     >
       <div className="relative aspect-[4/5] bg-zinc-100 overflow-hidden cursor-pointer">
@@ -52,7 +51,7 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
             loading="lazy"
             decoding="async"
             onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
-            className={"absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 " + (product.hoverImage ? 'group-hover:opacity-0' : 'group-hover:scale-105')}
+            className={"absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 " + (product.hoverImage ? 'group-hover:opacity-0' : 'group-hover:scale-105')}
           />
           {/* Hover Image */}
           {product.hoverImage && (
@@ -65,8 +64,9 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
               width="900"
               height="1125"
               loading="lazy"
+              decoding="async"
               onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&fm=webp&w=800' }}
-              className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+              className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
             />
           )}
         </Link>
@@ -132,3 +132,5 @@ export function ProductCard({ product, ...props }: { product: Product } & React.
     </motion.div>
   );
 }
+
+export const ProductCard = memo(ProductCardComponent);

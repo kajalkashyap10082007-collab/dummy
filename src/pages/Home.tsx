@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { products } from '../data';
 import { ArrowRight, Star, Truck, RefreshCw, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
@@ -33,22 +33,29 @@ const HERO_SLIDES = [
   }
 ];
 
-const heroSrcSet = (image: string) => image.replace('w=1920', 'w=480') + ' 480w, ' + image.replace('w=1920', 'w=768') + ' 768w, ' + image.replace('w=1920', 'w=1200') + ' 1200w, ' + image + ' 1920w';
+const heroSrcSet = (image: string) => {
+  const base = image.replace('&fm=webp', '').replace('?fm=webp', '');
+  return base.replace('w=1920', 'w=480') + ' 480w, ' + 
+         base.replace('w=1920', 'w=768') + ' 768w, ' + 
+         base.replace('w=1920', 'w=1200') + ' 1200w, ' + 
+         base + ' 1920w';
+};
 
 export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   
-  const newArrivals = products.filter(p => p.isTrending).slice(0, 4);
-  const bestSellers = products.filter(p => p.rating >= 4.5).slice(0, 4);
-  const homeSchema = JSON.stringify({
+  const newArrivals = useMemo(() => products.filter(p => p.isTrending).slice(0, 4), []);
+  const bestSellers = useMemo(() => products.filter(p => p.rating >= 4.5).slice(0, 4), []);
+  
+  const homeSchema = useMemo(() => JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
       { "@type": "Organization", "name": "Clothify", "url": "https://dummy-mauve.vercel.app/" },
       { "@type": "WebSite", "name": "Clothify", "url": "https://dummy-mauve.vercel.app/", "potentialAction": { "@type": "SearchAction", "target": "https://dummy-mauve.vercel.app/products?search={search_term_string}", "query-input": "required name=search_term_string" } }
     ]
-  });
+  }), []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
@@ -60,9 +67,7 @@ export function Home() {
 
   useEffect(() => {
     if (!isHovered) {
-      timerRef.current = setInterval(() => {
-        nextSlide();
-      }, 5000);
+      timerRef.current = setInterval(nextSlide, 5000);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -86,10 +91,10 @@ export function Home() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10" />
@@ -108,41 +113,41 @@ export function Home() {
             />
             <div className="absolute inset-0 z-20 flex flex-col justify-center items-start px-6 md:px-20 max-w-7xl mx-auto">
               <motion.span 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.15, duration: 0.4 }}
                 className="text-amber-400 font-bold tracking-widest uppercase mb-2 text-xs md:text-sm"
               >
                 {HERO_SLIDES[currentSlide].subtitle}
               </motion.span>
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
                 className="text-white text-3xl md:text-6xl font-black mb-4 uppercase tracking-tight max-w-2xl"
               >
                 Affordable Fashion for Everyone
               </motion.h1>
               <motion.h2
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
+                transition={{ delay: 0.25, duration: 0.4 }}
                 className="text-white text-xl md:text-3xl font-black mb-4 uppercase tracking-tight max-w-2xl"
               >
                 {HERO_SLIDES[currentSlide].title}
               </motion.h2>
               <motion.p 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
                 className="text-gray-200 text-sm md:text-xl mb-8 max-w-xl"
               >
                 {HERO_SLIDES[currentSlide].desc}
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.35, duration: 0.4 }}
               >
                 <Link to="/products" className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3.5 rounded-sm font-bold uppercase tracking-widest text-sm transition-all shadow-lg hover:shadow-blue-700/30 flex items-center min-h-[44px] min-w-[44px]">
                   Shop Now <ArrowRight className="w-5 h-5 ml-2" />
@@ -153,10 +158,10 @@ export function Home() {
         </AnimatePresence>
 
         {/* Carousel Controls */}
-        <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:group-hover:opacity-100" aria-label="Previous slide">
+        <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:opacity-100" aria-label="Previous slide">
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:group-hover:opacity-100" aria-label="Next slide">
+        <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:opacity-100" aria-label="Next slide">
           <ChevronRight className="w-6 h-6" />
         </button>
 
@@ -166,7 +171,7 @@ export function Home() {
             <button
               key={i}
               onClick={() => setCurrentSlide(i)}
-              className={"w-2.5 h-2.5 min-w-11 min-h-11 p-3 bg-clip-content rounded-full transition-all " + (i === currentSlide ? "bg-blue-700 w-8" : "bg-white/50 hover:bg-white")}
+              className={"w-2.5 h-2.5 min-w-[44px] min-h-[44px] p-3 bg-clip-content rounded-full transition-all " + (i === currentSlide ? "bg-blue-700 w-8" : "bg-white/50 hover:bg-white")}
               aria-label={"Go to slide " + (i + 1)}
             />
           ))}
@@ -177,19 +182,19 @@ export function Home() {
       <section className="bg-white py-6 border-b border-zinc-200">
         <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-6 md:gap-12">
           <div className="flex items-center text-zinc-600">
-            <Truck className="w-5 h-5 text-blue-700 mr-2" />
+            <Truck className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
             <span className="text-sm font-bold uppercase tracking-wider">Free Shipping</span>
           </div>
           <div className="flex items-center text-zinc-600">
-            <RefreshCw className="w-5 h-5 text-blue-700 mr-2" />
+            <RefreshCw className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
             <span className="text-sm font-bold uppercase tracking-wider">14-Day Returns</span>
           </div>
           <div className="flex items-center text-zinc-600">
-            <ShieldCheck className="w-5 h-5 text-blue-700 mr-2" />
+            <ShieldCheck className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
             <span className="text-sm font-bold uppercase tracking-wider">Secure Payment</span>
           </div>
           <div className="flex items-center text-zinc-600">
-            <Star className="w-5 h-5 text-blue-700 mr-2" />
+            <Star className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
             <span className="text-sm font-bold uppercase tracking-wider">Top Brands</span>
           </div>
         </div>
