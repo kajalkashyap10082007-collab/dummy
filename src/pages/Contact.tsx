@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function Contact() {
  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -27,7 +28,7 @@ export function Contact() {
 
  return (
  <div className="bg-blue-50 min-h-screen py-16 relative overflow-hidden">
-  <SEO title="Contact Clothify | Customer Support" description="Have questions about Clothify, products, orders or support? Contact our team and we'll be happy to help." schemaMarkup={contactSchema} canonicalUrl="https://dummy-mauve.vercel.app/contact-clothify" />
+  <SEO title={PAGE_SEO.contact.title} description={PAGE_SEO.contact.description} schemaMarkup={contactSchema} canonicalUrl={`${SITE_URL}${PAGE_SEO.contact.path}`} />
   {/* Decorative background blobs */}
   <div className="absolute top-10 left-10 w-[40vw] h-[40vw] bg-teal-100/40 rounded-full blur-3xl pointer-events-none"></div>
   <div className="absolute bottom-10 right-10 w-[50vw] h-[50vw] bg-amber-100/40 rounded-full blur-3xl pointer-events-none"></div>

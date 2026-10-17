@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { useToast } from '../components/Toast';
+import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -30,6 +32,7 @@ export function Login() {
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center p-4">
+      <SEO title={PAGE_SEO.login.title} description={PAGE_SEO.login.description} canonicalUrl={`${SITE_URL}${PAGE_SEO.login.path}`} noIndex />
       <div className="bg-white p-8 rounded-2xl shadow-xl border border-zinc-100 w-full max-w-md">
         <h1 className="text-3xl font-black text-zinc-900 mb-2 uppercase tracking-widest text-center">
           {isLogin ? 'Welcome Back' : 'Create Account'}

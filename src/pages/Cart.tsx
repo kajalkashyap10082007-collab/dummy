@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useStore } from '../store';
+import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function Cart() {
   const { cart, removeFromCart, updateQuantity } = useStore();
@@ -15,10 +17,11 @@ export function Cart() {
   if (cart.length === 0) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center p-4">
+        <SEO title={PAGE_SEO.cart.title} description={PAGE_SEO.cart.description} canonicalUrl={`${SITE_URL}${PAGE_SEO.cart.path}`} noIndex />
         <div className="w-24 h-24 bg-zinc-100 rounded-full flex items-center justify-center mb-6 text-zinc-500">
           <ShoppingBag className="w-10 h-10" />
         </div>
-        <h2 className="text-2xl font-black text-zinc-900 mb-2">Your cart is empty</h2>
+        <h1 className="text-2xl font-black text-zinc-900 mb-2">Your cart is empty</h1>
         <p className="text-zinc-500 mb-8 text-center max-w-sm">Looks like you haven't added anything to your cart yet. Discover our premium collection!</p>
         <Link to="/products" className="bg-blue-700 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-blue-700 transition-colors">
           Continue Shopping
@@ -29,6 +32,7 @@ export function Cart() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO title={PAGE_SEO.cart.title} description={PAGE_SEO.cart.description} canonicalUrl={`${SITE_URL}${PAGE_SEO.cart.path}`} noIndex />
       <h1 className="text-3xl font-black text-zinc-900 mb-8 uppercase tracking-widest">Shopping Cart</h1>
       
       <div className="flex flex-col lg:flex-row gap-12">

@@ -15,6 +15,7 @@ const Login = lazy(() => import('./pages/Login').then(module => ({ default: modu
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation').then(module => ({ default: module.OrderConfirmation })));
 const Blog = lazy(() => import('./pages/Blog').then(module => ({ default: module.Blog })));
 const Contact = lazy(() => import('./pages/Contact').then(module => ({ default: module.Contact })));
+const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[50vh]">
@@ -42,6 +43,7 @@ export default function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="sustainable-fashion-blog" element={<Blog />} />
                 <Route path="contact-clothify" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
           </Suspense>

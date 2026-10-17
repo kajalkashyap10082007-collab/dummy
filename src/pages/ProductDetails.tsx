@@ -6,6 +6,7 @@ import { products } from '../data';
 import { useStore } from '../store';
 import { useToast } from '../components/Toast';
 import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL, getProductSEO } from '../seo';
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -30,7 +31,8 @@ export function ProductDetails() {
   if (!product) {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center p-4">
-        <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
+        <SEO title={PAGE_SEO.notFound.title} description={PAGE_SEO.notFound.description} noIndex />
+        <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
         <button onClick={() => navigate('/products')} className="text-blue-700 hover:underline">
           Return to Shop
         </button>
@@ -38,11 +40,12 @@ export function ProductDetails() {
     );
   }
 
+  const productSEO = getProductSEO(product.name, product.category);
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Product", "name": product.name, "description": product.description, "image": product.images || [product.image], "category": product.category, "offers": { "@type": "Offer", "url": `https://dummy-mauve.vercel.app/product/${product.id}`, "priceCurrency": "INR", "price": product.price, "availability": "https://schema.org/InStock" } },
-      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dummy-mauve.vercel.app/" }, { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://dummy-mauve.vercel.app/products" }, { "@type": "ListItem", "position": 3, "name": product.name, "item": `https://dummy-mauve.vercel.app/product/${product.id}` }] }
+      { "@type": "Product", "name": product.name, "description": product.description, "image": product.images || [product.image], "category": product.category, "offers": { "@type": "Offer", "url": `${SITE_URL}/product/${product.id}`, "priceCurrency": "INR", "price": product.price, "availability": "https://schema.org/InStock" } },
+      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` }, { "@type": "ListItem", "position": 2, "name": "Products", "item": `${SITE_URL}${PAGE_SEO.products.path}` }, { "@type": "ListItem", "position": 3, "name": product.name, "item": `${SITE_URL}/product/${product.id}` }] }
     ]
   });
 
@@ -86,7 +89,7 @@ export function ProductDetails() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <SEO title={`${product.name} | Clothify`} description={product.description || `Shop ${product.name} at Clothify.`} schemaMarkup={productSchema} canonicalUrl={`https://dummy-mauve.vercel.app/product/${product.id}`} ogType="product" ogImage={product.image} />
+      <SEO title={productSEO.title} description={productSEO.description} schemaMarkup={productSchema} canonicalUrl={`${SITE_URL}/product/${product.id}`} ogType="product" ogImage={product.image} />
       <button aria-label="Go back" onClick={() => navigate(-1)} className="flex items-center text-zinc-600 hover:text-blue-700 mb-8 transition-colors min-h-[44px]">
         <ArrowLeft className="w-4 h-4 mr-2" /> Back
       </button>

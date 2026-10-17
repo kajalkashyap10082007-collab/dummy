@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, XCircle, Info, X } from 'lucide-react';
+import '../styles/toast-animations.css';
 
 type ToastType = 'success' | 'error' | 'info';
 
@@ -17,13 +17,9 @@ interface ToastContextType {
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 const ToastItem = memo(({ t, onRemove }: { t: Toast; onRemove: (id: string) => void }) => (
-  <motion.div
+  <div
     key={t.id}
-    initial={{ opacity: 0, y: 15 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 10, transition: { duration: 0.15 } }}
-    transition={{ duration: 0.2 }}
-    className="bg-zinc-900 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-3 pointer-events-auto min-w-[300px]"
+    className="toast-item bg-zinc-900 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-3 pointer-events-auto min-w-[300px]"
   >
     {t.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
     {t.type === 'error' && <XCircle className="w-5 h-5 text-red-400" />}
@@ -32,7 +28,7 @@ const ToastItem = memo(({ t, onRemove }: { t: Toast; onRemove: (id: string) => v
     <button aria-label="Close" onClick={() => onRemove(t.id)} className="ml-auto text-zinc-500 hover:text-white transition-colors p-1">
       <X className="w-4 h-4" />
     </button>
-  </motion.div>
+  </div>
 ));
 
 ToastItem.displayName = 'ToastItem';
@@ -56,11 +52,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={{ toast }}>
       {children}
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
-        <AnimatePresence mode="popLayout">
-          {toasts.map((t) => (
-            <ToastItem key={t.id} t={t} onRemove={removeToast} />
-          ))}
-        </AnimatePresence>
+        {toasts.map((t) => (
+          <ToastItem key={t.id} t={t} onRemove={removeToast} />
+        ))}
       </div>
     </ToastContext.Provider>
   );

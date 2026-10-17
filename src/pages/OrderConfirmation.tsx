@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 import { useEffect } from 'react';
+import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function OrderConfirmation() {
   const location = useLocation();
@@ -17,6 +19,7 @@ export function OrderConfirmation() {
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center p-4">
+      <SEO title={PAGE_SEO.orderConfirmation.title} description={PAGE_SEO.orderConfirmation.description} canonicalUrl={`${SITE_URL}${PAGE_SEO.orderConfirmation.path}`} noIndex />
       <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
         <CheckCircle className="w-12 h-12 text-emerald-600" />
       </div>

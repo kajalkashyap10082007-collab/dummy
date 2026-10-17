@@ -1,8 +1,7 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store';
 import { useToast } from './Toast';
-import { motion } from 'motion/react';
 import { QuickView } from './QuickView';
 import { Heart, Star, ShoppingBag } from 'lucide-react';
 import { Product } from '../types';
@@ -11,6 +10,22 @@ function ProductCardComponent({ product, ...props }: { product: Product } & Reac
   const { addToWishlist, removeFromWishlist, wishlist, addToCart } = useStore();
   const { toast } = useToast();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { margin: '-40px', threshold: 0.01 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   const isWishlisted = wishlist.some(p => p.id === product.id);
 
@@ -30,13 +45,12 @@ function ProductCardComponent({ product, ...props }: { product: Product } & Reac
   };
 
   return (
-    <motion.div 
+    <div 
+      ref={ref}
       {...(props as any)}
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.3 }}
-      className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-zinc-100"
+      className={`group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-zinc-100 ${
+        isVisible ? 'opacity-100 animate-fade-in' : 'opacity-0'
+      }`}
     >
       <div className="relative aspect-[4/5] bg-zinc-100 overflow-hidden cursor-pointer">
         <Link to={"/product/" + product.id} className="block w-full h-full">
@@ -129,7 +143,7 @@ function ProductCardComponent({ product, ...props }: { product: Product } & Reac
       </div>
 
       <QuickView product={product} isOpen={isQuickViewOpen} onClose={() => setIsQuickViewOpen(false)} />
-    </motion.div>
+    </div>
   );
 }
 

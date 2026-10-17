@@ -21,14 +21,22 @@ interface StoreState {
   removeFromWishlist: (productId: string) => void;
   login: (user: any) => void;
   logout: () => void;
+  hydrate: () => void;
+  isHydrated: boolean;
 }
+
+// Detect if we're in a browser environment
+const isBrowser = typeof window !== 'undefined';
+// Flag to track if hydration has been queued
+let hydrationScheduled = false;
 
 export const useStore = create<StoreState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       cart: [],
       wishlist: [],
       user: null,
+      isHydrated: false,
 
       addToCart: (product, size, color, quantity = 1) => set((state) => {
         const existingItem = state.cart.find(
@@ -74,9 +82,51 @@ export const useStore = create<StoreState>()(
 
       login: (user) => set({ user }),
       logout: () => set({ user: null }),
+      
+      hydrate: () => {
+        if (!isBrowser || get().isHydrated) return;
+        
+        // Only hydrate once
+        set({ isHydrated: true });
+        
+        // Try to read persisted state from localStorage
+        try {
+          const stored = localStorage.getItem('clothify-storage');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (parsed.state) {
+              set(parsed.state);
+            }
+          }
+        } catch (error) {
+          console.error('Failed to hydrate store:', error);
+        }
+      }
     }),
     {
       name: 'clothify-storage',
+      // Prevent automatic hydration from localStorage on store creation
+      skipHydration: true,
     }
   )
 );
+
+// Schedule hydration to happen after initial render completes
+// Use requestIdleCallback if available, otherwise setTimeout
+if (isBrowser && !hydrationScheduled) {
+  hydrationScheduled = true;
+  if (typeof requestIdleCallback !== 'undefined') {
+    // Wait for main thread to be idle (after React rendering)
+    requestIdleCallback(() => {
+      useStore.getState().hydrate();
+    }, { timeout: 2000 });
+  } else {
+    // Fallback: schedule after React has finished rendering
+    // Using setTimeout(0) defers to after microtasks, then another setTimeout for after rendering
+    setTimeout(() => {
+      setTimeout(() => {
+        useStore.getState().hydrate();
+      }, 0);
+    }, 0);
+  }
+}

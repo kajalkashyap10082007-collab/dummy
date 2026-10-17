@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function About() {
   const aboutSchema = JSON.stringify({
@@ -13,7 +14,7 @@ export function About() {
 
  return (
  <div className="bg-blue-50 min-h-screen relative overflow-hidden">
-  <SEO title="About Clothify - Affordable & Sustainable Fashion" description="Learn about Clothify and our mission to make stylish, affordable and quality fashion accessible for men, women and kids." schemaMarkup={aboutSchema} canonicalUrl="https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion" />
+  <SEO title={PAGE_SEO.about.title} description={PAGE_SEO.about.description} schemaMarkup={aboutSchema} canonicalUrl={`${SITE_URL}${PAGE_SEO.about.path}`} />
   {/* Decorative background blobs */}
   <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-teal-50/50 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
   <div className="absolute bottom-0 right-0 w-[60vw] h-[60vw] bg-amber-50/50 rounded-full blur-3xl translate-y-1/4 translate-x-1/4 pointer-events-none"></div>

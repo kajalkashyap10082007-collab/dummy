@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { useToast } from '../components/Toast';
+import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function Checkout() {
   const { cart, clearCart } = useStore();
@@ -54,6 +56,7 @@ export function Checkout() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO title={PAGE_SEO.checkout.title} description={PAGE_SEO.checkout.description} canonicalUrl={`${SITE_URL}${PAGE_SEO.checkout.path}`} noIndex />
       <h1 className="text-3xl font-black text-zinc-900 mb-8 uppercase tracking-widest">Checkout</h1>
       
       <div className="flex flex-col lg:flex-row gap-12">

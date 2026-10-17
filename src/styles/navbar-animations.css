@@ -1,0 +1,78 @@
+/* Navbar animations */
+
+/* Announcement bar animation */
+@keyframes announcementSlideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 100px;
+    opacity: 1;
+  }
+}
+
+.announcement-bar {
+  animation: announcementSlideDown 0.3s ease-in-out forwards;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+/* Navigation indicator animation */
+.nav-indicator {
+  animation: scaleIn 0.2s ease-in-out forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Mega menu animation */
+.navbar-mega-menu {
+  animation: megaMenuFadeIn 0.2s ease-in-out forwards;
+}
+
+@keyframes megaMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile menu animations */
+.mobile-menu-backdrop {
+  animation: backdropFadeIn 0.15s ease-in-out forwards;
+}
+
+.mobile-menu-drawer {
+  animation: drawerSlideIn 0.4s ease-out forwards;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

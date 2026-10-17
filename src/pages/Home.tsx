@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { products } from '../data';
 import { ArrowRight, Star, Truck, RefreshCw, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
+import '../styles/hero-animations.css';
 
 const HERO_SLIDES = [
   {
@@ -77,10 +78,10 @@ export function Home() {
   return (
     <div className="bg-[#f8f9fa] min-h-screen">
       <SEO 
-        title="Clothify - Affordable Fashion for Men, Women & Kids" 
-        description="Discover affordable and trendy clothing for men, women and kids at Clothify. Shop stylish fashion, new arrivals and great deals online." 
+        title={PAGE_SEO.home.title}
+        description={PAGE_SEO.home.description}
         schemaMarkup={homeSchema}
-        canonicalUrl="https://dummy-mauve.vercel.app/"
+        canonicalUrl={`${SITE_URL}${PAGE_SEO.home.path}`}
       />
       {/* Hero Carousel */}
       <section 
@@ -88,74 +89,56 @@ export function Home() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10" />
-            <img 
-              src={HERO_SLIDES[currentSlide].image} 
-              srcSet={heroSrcSet(HERO_SLIDES[currentSlide].image)}
-              sizes="100vw"
-              alt="Clothify affordable fashion collection"
-              width="1920"
-              height="600"
-              loading={currentSlide === 0 ? 'eager' : 'lazy'}
-              fetchPriority={currentSlide === 0 ? 'high' : 'auto'}
-              decoding="async"
-              onError={(e) => { e.currentTarget.src = HERO_SLIDES[currentSlide].fallback }}
-              className="w-full h-full object-cover object-top"
-            />
-            <div className="absolute inset-0 z-20 flex flex-col justify-center items-start px-6 md:px-20 max-w-7xl mx-auto">
-              <motion.span 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15, duration: 0.4 }}
-                className="text-amber-400 font-bold tracking-widest uppercase mb-2 text-xs md:text-sm"
-              >
-                {HERO_SLIDES[currentSlide].subtitle}
-              </motion.span>
-              <motion.h1
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="text-white text-3xl md:text-6xl font-black mb-4 uppercase tracking-tight max-w-2xl"
-              >
-                Affordable Fashion for Everyone
-              </motion.h1>
-              <motion.h2
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.4 }}
-                className="text-white text-xl md:text-3xl font-black mb-4 uppercase tracking-tight max-w-2xl"
-              >
-                {HERO_SLIDES[currentSlide].title}
-              </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="text-gray-200 text-sm md:text-xl mb-8 max-w-xl"
-              >
-                {HERO_SLIDES[currentSlide].desc}
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
-              >
-                <Link to="/products" className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3.5 rounded-sm font-bold uppercase tracking-widest text-sm transition-all shadow-lg hover:shadow-blue-700/30 flex items-center min-h-[44px] min-w-[44px]">
-                  Shop Now <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
-              </motion.div>
+        <div key={currentSlide} className="hero-slide absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10" />
+          <img 
+            src={HERO_SLIDES[currentSlide].image} 
+            srcSet={heroSrcSet(HERO_SLIDES[currentSlide].image)}
+            sizes="100vw"
+            alt="Clothify affordable fashion collection"
+            width="1920"
+            height="600"
+            loading={currentSlide === 0 ? 'eager' : 'lazy'}
+            fetchPriority={currentSlide === 0 ? 'high' : 'auto'}
+            decoding="async"
+            onError={(e) => { e.currentTarget.src = HERO_SLIDES[currentSlide].fallback }}
+            className="w-full h-full object-cover object-top"
+          />
+          <div className="absolute inset-0 z-20 flex flex-col justify-center items-start px-6 md:px-20 max-w-7xl mx-auto">
+            <span 
+              className="hero-text-subtitle text-amber-400 font-bold tracking-widest uppercase mb-2 text-xs md:text-sm"
+              style={{ animationDelay: '0.15s' }}
+            >
+              {HERO_SLIDES[currentSlide].subtitle}
+            </span>
+            <h1
+              className="hero-text-title text-white text-3xl md:text-6xl font-black mb-4 uppercase tracking-tight max-w-2xl"
+              style={{ animationDelay: '0.2s' }}
+            >
+              Affordable Fashion for Everyone
+            </h1>
+            <h2
+              className="hero-text-subtitle text-white text-xl md:text-3xl font-black mb-4 uppercase tracking-tight max-w-2xl"
+              style={{ animationDelay: '0.25s' }}
+            >
+              {HERO_SLIDES[currentSlide].title}
+            </h2>
+            <p 
+              className="hero-text-description text-gray-200 text-sm md:text-xl mb-8 max-w-xl"
+              style={{ animationDelay: '0.3s' }}
+            >
+              {HERO_SLIDES[currentSlide].desc}
+            </p>
+            <div
+              className="hero-text-button"
+              style={{ animationDelay: '0.35s' }}
+            >
+              <Link to="/products" className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3.5 rounded-sm font-bold uppercase tracking-widest text-sm transition-all shadow-lg hover:shadow-blue-700/30 flex items-center min-h-[44px] min-w-[44px]">
+                Shop Now <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        </div>
 
         {/* Carousel Controls */}
         <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:opacity-100" aria-label="Previous slide">

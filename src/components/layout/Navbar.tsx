@@ -12,7 +12,7 @@ import {
   Heart
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { motion, AnimatePresence } from 'motion/react';
+import '../../styles/navbar-animations.css';
 
 const MEGA_MENUS: Record<
   string,
@@ -124,28 +124,23 @@ export function Navbar() {
   return (
     <>
       {/* Announcement Bar */}
-      <AnimatePresence>
-        {showAnnouncement && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="bg-gradient-to-r from-blue-700 via-emerald-500 to-amber-500 text-white text-xs font-bold py-2 px-4 flex items-center justify-center relative overflow-hidden"
-          >
-            <span className="tracking-wide text-center drop-shadow-sm">
-              FREE SHIPPING ON ORDERS OVER ₹2,999 • SHOP THE SUMMER SALE NOW
-            </span>
+      {showAnnouncement && (
+        <div
+          className="announcement-bar bg-gradient-to-r from-blue-700 via-emerald-500 to-amber-500 text-white text-xs font-bold py-2 px-4 flex items-center justify-center relative overflow-hidden"
+        >
+          <span className="tracking-wide text-center drop-shadow-sm">
+            FREE SHIPPING ON ORDERS OVER ₹2,999 • SHOP THE SUMMER SALE NOW
+          </span>
 
-            <button
-              onClick={() => setShowAnnouncement(false)}
-              aria-label="Close announcement"
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded-full transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-            >
-              <X className="w-3 h-3" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <button
+            onClick={() => setShowAnnouncement(false)}
+            aria-label="Close announcement"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded-full transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        </div>
+      )}
 
       {/* Top Utility Bar */}
       <div className="bg-black text-amber-500 py-2 px-4 sm:px-6 lg:px-8 hidden md:block text-[11px] font-bold tracking-widest uppercase">
@@ -287,15 +282,8 @@ export function Navbar() {
 
                       {(location.pathname + location.search === link.path ||
                         hoveredMenu === link.name) && (
-                        <motion.div
-                          layoutId="navbar-indicator"
-                          className="absolute bottom-0 left-0 right-0 h-[4px] bg-blue-700 rounded-t-md"
-                          initial={false}
-                          transition={{
-                            type: 'spring',
-                            stiffness: 400,
-                            damping: 30
-                          }}
+                        <div
+                          className="nav-indicator absolute bottom-0 left-0 right-0 h-[4px] bg-blue-700 rounded-t-md"
                         />
                       )}
                     </Link>
@@ -304,12 +292,8 @@ export function Navbar() {
                     {link.hasMegaMenu &&
                       hoveredMenu === link.name &&
                       MEGA_MENUS[link.name] && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-[85px] left-0 right-0 bg-white border-t border-b border-zinc-200 shadow-xl overflow-hidden z-50 py-8 px-10"
+                        <div
+                          className="navbar-mega-menu absolute top-[85px] left-0 right-0 bg-white border-t border-b border-zinc-200 shadow-xl overflow-hidden z-50 py-8 px-10"
                           style={{
                             maxHeight: '80vh',
                             overflowY: 'auto'
@@ -377,7 +361,7 @@ export function Navbar() {
                               </div>
                             )}
                           </div>
-                        </motion.div>
+                        </div>
                       )}
                   </div>
                 );
@@ -477,32 +461,20 @@ export function Navbar() {
         </div>
 
         {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setMobileMenuOpen(false)}
-                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-              />
+        {mobileMenuOpen && (
+          <>
+            <div
+              className="mobile-menu-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
 
-              <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '-100%' }}
-                transition={{
-                  type: 'spring',
-                  bounce: 0,
-                  duration: 0.4
-                }}
-                className="fixed inset-y-0 left-0 w-[80%] max-w-sm bg-white shadow-xl z-50 p-6 flex flex-col md:hidden"
-                id="mobile-navigation"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Mobile navigation"
-              >
+            <div
+              className="mobile-menu-drawer fixed inset-y-0 left-0 w-[80%] max-w-sm bg-white shadow-xl z-50 p-6 flex flex-col md:hidden"
+              id="mobile-navigation"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
+            >
                 <div className="flex items-center justify-between mb-8">
                   <Link
                     to="/"
@@ -575,10 +547,9 @@ export function Navbar() {
                     </button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </>
           )}
-        </AnimatePresence>
       </header>
     </>
   );

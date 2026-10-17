@@ -1,17 +1,22 @@
 import React, { useState, useMemo } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { products } from '../data';
 import { Search, Filter, X, ChevronDown } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 const CATEGORIES = ['All', 'Men', 'Women', 'Kids'];
 const SIZES = ['XS', 'S', 'M', 'L', 'XL'];
 const COLORS = ['Black', 'White', 'Navy', 'Sage'];
 
 export function Products() {
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const pageSEO = location.pathname === PAGE_SEO.premiumCollection.path
+    ? PAGE_SEO.premiumCollection
+    : PAGE_SEO.products;
   const initialCategory = searchParams.get('category') || 'All';
   const initialSearch = searchParams.get('search') || '';
   const initialTrending = searchParams.get('trending') === 'true';
@@ -91,7 +96,7 @@ export function Products() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <SEO title="Shop Affordable Fashion for Men, Women & Kids | Clothify" description="Shop affordable and trendy clothing for men, women and kids. Explore dresses, shirts, jeans, tops, kidswear and more at Clothify." schemaMarkup={JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "CollectionPage", "name": "Shop Affordable Fashion", "url": "https://dummy-mauve.vercel.app/products" }, { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dummy-mauve.vercel.app/" }, { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://dummy-mauve.vercel.app/products" }] }] })} canonicalUrl="https://dummy-mauve.vercel.app/products" />
+      <SEO title={pageSEO.title} description={pageSEO.description} schemaMarkup={JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "CollectionPage", "name": "Shop Affordable Fashion", "url": `${SITE_URL}${PAGE_SEO.products.path}` }, { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` }, { "@type": "ListItem", "position": 2, "name": "Products", "item": `${SITE_URL}${PAGE_SEO.products.path}` }] }] })} canonicalUrl={`${SITE_URL}${pageSEO.canonicalPath || pageSEO.path}`} />
       
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 space-y-4 md:space-y-0">

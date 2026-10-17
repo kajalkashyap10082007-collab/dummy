@@ -1,10 +1,10 @@
-import { motion, AnimatePresence } from 'motion/react';
 import { X, Star, ShoppingBag, Heart } from 'lucide-react';
 import { useEffect, useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types';
 import { useStore } from '../store';
 import { useToast } from './Toast';
+import '../styles/quickview-animations.css';
 
 interface QuickViewProps {
   product: Product;
@@ -55,27 +55,19 @@ function QuickViewComponent({ product, isOpen, onClose }: QuickViewProps) {
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          <motion.div 
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 quickview-overlay">
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm quickview-backdrop"
+            onClick={onClose}
+          />
+          
+          <div 
             role="dialog"
             aria-modal="true"
             aria-labelledby="quick-view-title"
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-          />
-          
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col md:flex-row"
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col md:flex-row quickview-modal"
           >
             <button aria-label="Close" onClick={onClose} className="absolute top-4 right-4 z-20 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-zinc-600 hover:text-zinc-900 shadow-sm">
               <X className="w-5 h-5" />
@@ -163,10 +155,10 @@ function QuickViewComponent({ product, isOpen, onClose }: QuickViewProps) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 

@@ -7,11 +7,12 @@ interface SEOProps {
   canonicalUrl?: string;
   ogType?: 'website' | 'article' | 'product';
   ogImage?: string;
+  noIndex?: boolean;
 }
 
 const DEFAULT_OG_IMAGE = 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&fm=webp&w=1200';
 
-export function SEO({ title, description, schemaMarkup, canonicalUrl, ogType = 'website', ogImage = DEFAULT_OG_IMAGE }: SEOProps) {
+export function SEO({ title, description, schemaMarkup, canonicalUrl, ogType = 'website', ogImage = DEFAULT_OG_IMAGE, noIndex = false }: SEOProps) {
   useEffect(() => {
     document.title = title;
 
@@ -31,10 +32,12 @@ export function SEO({ title, description, schemaMarkup, canonicalUrl, ogType = '
     setMeta('meta[property="og:type"]', 'property', 'og:type', ogType);
     setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'Clothify');
     setMeta('meta[property="og:image"]', 'property', 'og:image', ogImage);
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', 'en_IN');
     setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', ogImage);
+    setMeta('meta[name="robots"]', 'name', 'robots', noIndex ? 'noindex, nofollow' : 'index, follow');
 
     // Update canonical tag
     const canonicalLinks = Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]'));
@@ -67,7 +70,7 @@ export function SEO({ title, description, schemaMarkup, canonicalUrl, ogType = '
         script.remove();
       }
     }
-  }, [title, description, schemaMarkup, canonicalUrl, ogType, ogImage]);
+  }, [title, description, schemaMarkup, canonicalUrl, ogType, ogImage, noIndex]);
 
   return null;
 }

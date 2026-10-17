@@ -3,6 +3,7 @@ import { blogPosts } from '../data';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
+import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function Blog() {
   const blogSchema = JSON.stringify({
@@ -16,7 +17,7 @@ export function Blog() {
 
  return (
  <div className="bg-blue-50 min-h-screen relative overflow-hidden">
-  <SEO title="Fashion Tips & Trends Blog | Clothify" description="Explore fashion tips, outfit ideas, clothing trends and affordable styling inspiration for men, women and kids on the Clothify blog." schemaMarkup={blogSchema} canonicalUrl="https://dummy-mauve.vercel.app/sustainable-fashion-blog" />
+  <SEO title={PAGE_SEO.blog.title} description={PAGE_SEO.blog.description} schemaMarkup={blogSchema} canonicalUrl={`${SITE_URL}${PAGE_SEO.blog.path}`} />
   {/* Decorative background blobs */}
   <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-teal-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
   <div className="absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-blue-50/50 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
