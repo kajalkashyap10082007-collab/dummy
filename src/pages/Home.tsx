@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { products } from '../data';
@@ -11,6 +12,7 @@ const HERO_SLIDES = [
   {
     id: 1,
     subtitle: 'End of Reason Sale',
+    alt: 'Fashion models showcasing stylish clothing',
     title: '50-80% OFF',
     desc: 'On global brands & exclusive collections. The biggest fashion event is live.',
     image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&fm=webp&w=1920',
@@ -19,6 +21,7 @@ const HERO_SLIDES = [
   {
     id: 2,
     subtitle: 'New Launch',
+    alt: 'Red athletic shoe from the sportswear collection',
     title: 'MIN 30% + EXTRA 5% OFF',
     desc: 'Breathable knitted upper shoes and sportswear for ultimate comfort.',
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&fm=webp&w=1920',
@@ -27,6 +30,7 @@ const HERO_SLIDES = [
   {
     id: 3,
     subtitle: 'Winter Collection',
+    alt: 'Model showcasing a contemporary fashion outfit',
     title: 'STAY WARM, STAY STYLISH',
     desc: 'Cozy sweaters, premium jackets, and winter essentials up to 40% off.',
     image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&fm=webp&w=1920',
@@ -36,9 +40,9 @@ const HERO_SLIDES = [
 
 const heroSrcSet = (image: string) => {
   const base = image.replace('&fm=webp', '').replace('?fm=webp', '');
-  return base.replace('w=1920', 'w=480') + ' 480w, ' + 
-         base.replace('w=1920', 'w=768') + ' 768w, ' + 
-         base.replace('w=1920', 'w=1200') + ' 1200w, ' + 
+  return base.replace('w=1920', 'w=480') + ' 480w, ' +
+         base.replace('w=1920', 'w=768') + ' 768w, ' +
+         base.replace('w=1920', 'w=1200') + ' 1200w, ' +
          base + ' 1920w';
 };
 
@@ -46,10 +50,10 @@ export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const newArrivals = useMemo(() => products.filter(p => p.isTrending).slice(0, 4), []);
   const bestSellers = useMemo(() => products.filter(p => p.rating >= 4.5).slice(0, 4), []);
-  
+
   const homeSchema = useMemo(() => JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
@@ -77,25 +81,27 @@ export function Home() {
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen">
-      <SEO 
+      <SEO
         title={PAGE_SEO.home.title}
         description={PAGE_SEO.home.description}
         schemaMarkup={homeSchema}
         canonicalUrl={`${SITE_URL}${PAGE_SEO.home.path}`}
       />
+
       {/* Hero Carousel */}
-      <section 
+      <section
         className="relative h-[400px] md:h-[600px] w-full overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <div key={currentSlide} className="hero-slide absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10" />
-          <img 
-            src={HERO_SLIDES[currentSlide].image} 
+
+          <img
+            src={HERO_SLIDES[currentSlide].image}
             srcSet={heroSrcSet(HERO_SLIDES[currentSlide].image)}
             sizes="100vw"
-            alt="Clothify affordable fashion collection"
+            alt={HERO_SLIDES[currentSlide].alt}
             width="1920"
             height="600"
             loading={currentSlide === 0 ? 'eager' : 'lazy'}
@@ -104,35 +110,37 @@ export function Home() {
             onError={(e) => { e.currentTarget.src = HERO_SLIDES[currentSlide].fallback }}
             className="w-full h-full object-cover object-top"
           />
+
           <div className="absolute inset-0 z-20 flex flex-col justify-center items-start px-6 md:px-20 max-w-7xl mx-auto">
-            <span 
+            <span
               className="hero-text-subtitle text-amber-400 font-bold tracking-widest uppercase mb-2 text-xs md:text-sm"
               style={{ animationDelay: '0.15s' }}
             >
               {HERO_SLIDES[currentSlide].subtitle}
             </span>
+
             <h1
               className="hero-text-title text-white text-3xl md:text-6xl font-black mb-4 uppercase tracking-tight max-w-2xl"
               style={{ animationDelay: '0.2s' }}
             >
               Affordable Fashion for Everyone
             </h1>
+
             <h2
               className="hero-text-subtitle text-white text-xl md:text-3xl font-black mb-4 uppercase tracking-tight max-w-2xl"
               style={{ animationDelay: '0.25s' }}
             >
               {HERO_SLIDES[currentSlide].title}
             </h2>
-            <p 
+
+            <p
               className="hero-text-description text-gray-200 text-sm md:text-xl mb-8 max-w-xl"
               style={{ animationDelay: '0.3s' }}
             >
               {HERO_SLIDES[currentSlide].desc}
             </p>
-            <div
-              className="hero-text-button"
-              style={{ animationDelay: '0.35s' }}
-            >
+
+            <div className="hero-text-button" style={{ animationDelay: '0.35s' }}>
               <Link to="/products" className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3.5 rounded-sm font-bold uppercase tracking-widest text-sm transition-all shadow-lg hover:shadow-blue-700/30 flex items-center min-h-[44px] min-w-[44px]">
                 Shop Now <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
@@ -144,6 +152,7 @@ export function Home() {
         <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:opacity-100" aria-label="Previous slide">
           <ChevronLeft className="w-6 h-6" />
         </button>
+
         <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/10 hover:bg-white/30 backdrop-blur-sm rounded-full text-white transition-all min-w-[44px] min-h-[44px] flex items-center justify-center opacity-0 md:opacity-100" aria-label="Next slide">
           <ChevronRight className="w-6 h-6" />
         </button>
@@ -184,7 +193,7 @@ export function Home() {
       </section>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
-        
+
         {/* Deal of the Day Banner */}
         <div className="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl overflow-hidden shadow-xl flex flex-col md:flex-row">
           <div className="p-8 md:p-12 flex flex-col justify-center text-white md:w-1/2">
@@ -195,8 +204,19 @@ export function Home() {
               Shop Denim <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>
+
           <div className="md:w-1/2 min-h-[300px] relative">
-              <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000" srcSet="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=768 768w, https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000 1000w" sizes="(max-width: 767px) 100vw, 50vw" alt="Blue denim collection" width="1000" height="667" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+            <img
+              src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000"
+              srcSet="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=768 768w, https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=1000 1000w"
+              sizes="(max-width: 767px) 100vw, 50vw"
+              alt="Blue denim collection"
+              width="1000"
+              height="667"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
           </div>
         </div>
 
@@ -211,6 +231,7 @@ export function Home() {
               View All <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {newArrivals.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -224,6 +245,7 @@ export function Home() {
             <h2 className="text-3xl font-black text-zinc-900 mb-2">Shop by Category</h2>
             <div className="w-20 h-1 bg-blue-700 rounded-full mx-auto"></div>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link to="/products?category=Men" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
               <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Men's cotton t-shirts" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -234,6 +256,7 @@ export function Home() {
                 </div>
               </div>
             </Link>
+
             <Link to="/products?category=Women" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
               <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Women's evening dresses" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
@@ -243,6 +266,7 @@ export function Home() {
                 </div>
               </div>
             </Link>
+
             <Link to="/products?category=Kids" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
               <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Kids' fashion accessories" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
@@ -266,6 +290,7 @@ export function Home() {
               View All <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {bestSellers.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -278,7 +303,6 @@ export function Home() {
           <Link to="/sustainable-fashion-blog" className="hover:text-blue-700">Fashion Blog</Link>
           <Link to="/contact-clothify" className="hover:text-blue-700">Contact Support</Link>
         </nav>
-
       </main>
     </div>
   );
