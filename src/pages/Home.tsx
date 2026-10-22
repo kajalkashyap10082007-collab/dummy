@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { products } from '../data';
@@ -49,7 +48,7 @@ const heroSrcSet = (image: string) => {
 export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const newArrivals = useMemo(() => products.filter(p => p.isTrending).slice(0, 4), []);
   const bestSellers = useMemo(() => products.filter(p => p.rating >= 4.5).slice(0, 4), []);
@@ -57,8 +56,21 @@ export function Home() {
   const homeSchema = useMemo(() => JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Organization", "name": "Clothify", "url": "https://dummy-mauve.vercel.app/" },
-      { "@type": "WebSite", "name": "Clothify", "url": "https://dummy-mauve.vercel.app/", "potentialAction": { "@type": "SearchAction", "target": "https://dummy-mauve.vercel.app/products?search={search_term_string}", "query-input": "required name=search_term_string" } }
+      {
+        "@type": "Organization",
+        "name": "Clothify",
+        "url": SITE_URL
+      },
+      {
+        "@type": "WebSite",
+        "name": "Clothify",
+        "url": SITE_URL,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": `${SITE_URL}/products?search={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      }
     ]
   }), []);
 
@@ -123,7 +135,7 @@ export function Home() {
               className="hero-text-title text-white text-3xl md:text-6xl font-black mb-4 uppercase tracking-tight max-w-2xl"
               style={{ animationDelay: '0.2s' }}
             >
-              Affordable Fashion for Everyone
+              Affordable Clothing for Men, Women & Kids
             </h1>
 
             <h2

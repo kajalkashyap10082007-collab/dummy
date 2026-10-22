@@ -41,13 +41,50 @@ export function ProductDetails() {
   }
 
   const productSEO = getProductSEO(product.name, product.category);
+   
   const productSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Product", "name": product.name, "description": product.description, "image": product.images || [product.image], "category": product.category, "offers": { "@type": "Offer", "url": `${SITE_URL}/product/${product.id}`, "priceCurrency": "INR", "price": product.price, "availability": "https://schema.org/InStock" } },
-      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` }, { "@type": "ListItem", "position": 2, "name": "Products", "item": `${SITE_URL}${PAGE_SEO.products.path}` }, { "@type": "ListItem", "position": 3, "name": product.name, "item": `${SITE_URL}/product/${product.id}` }] }
+      {
+        "@type": "Product",
+        "@id": `${SITE_URL}/product/${product.id}#product`,
+        "name": product.name,
+        "description": product.description,
+        "image": product.images?.length ? product.images : [product.image],
+        "category": product.category,
+        "offers": {
+          "@type": "Offer",
+          "url": `${SITE_URL}/product/${product.id}`,
+          "priceCurrency": "INR",
+          "price": product.price
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": `${SITE_URL}/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Products",
+            "item": `${SITE_URL}${PAGE_SEO.products.path}`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": product.name,
+            "item": `${SITE_URL}/product/${product.id}`
+          }
+        ]
+      }
     ]
   });
+
 
   const handleAddToCart = () => {
     if (product.sizes && product.sizes.length > 0 && !selectedSize) {

@@ -4,7 +4,7 @@ const imageUrl = (id: string) => `https://images.unsplash.com/${id}?auto=format&
 
 const productImages = {
   Men: [
-    'photo-1521572163474-6864f9cf17ab', 'photo-1596755094514-f87e34085b2c',
+    'photo-1521572163474-6864f9cf17ab', 'photo-159675594514-f87e34085b2c',
     'photo-1617127365659-c47fa864d8bc', 'photo-1551488831-00ddcb6c6bd3',
     'photo-1516826957135-700dedea698c', 'photo-1551488831-00ddcb6c6bd3',
     'photo-1548883354-94bcfe321cbb', 'photo-1593030761757-71fae46af508'

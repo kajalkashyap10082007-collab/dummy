@@ -96,7 +96,7 @@ export function Products() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <SEO title={pageSEO.title} description={pageSEO.description} schemaMarkup={JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "CollectionPage", "name": "Shop Affordable Fashion", "url": `${SITE_URL}${PAGE_SEO.products.path}` }, { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` }, { "@type": "ListItem", "position": 2, "name": "Products", "item": `${SITE_URL}${PAGE_SEO.products.path}` }] }] })} canonicalUrl={`${SITE_URL}${pageSEO.canonicalPath || pageSEO.path}`} />
+      <SEO title={pageSEO.title} description={pageSEO.description} schemaMarkup={JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "CollectionPage", "name": "Shop Affordable Clothing for Men, Women & Kids", "url": `${SITE_URL}${PAGE_SEO.products.path}` }, { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` }, { "@type": "ListItem", "position": 2, "name": "Products", "item": `${SITE_URL}${PAGE_SEO.products.path}` }] }] })} canonicalUrl={`${SITE_URL}${pageSEO.canonicalPath || pageSEO.path}`} />
       
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 space-y-4 md:space-y-0">

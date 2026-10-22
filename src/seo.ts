@@ -1,4 +1,3 @@
-
 export const SITE_URL = 'https://dummy-mauve.vercel.app';
 
 export interface PageSEO {
@@ -12,21 +11,21 @@ export interface PageSEO {
 export const PAGE_SEO: Record<string, PageSEO> = {
   home: {
     path: '/',
-    title: 'Affordable Clothing for Men, Women & Kids | Clothify',
+    title: 'Clothify | Online Fashion Store for Men, Women & Kids',
     description:
-      'Shop affordable fashion for men, women and kids at Clothify. Discover everyday clothing, fresh arrivals and easy-to-style outfits with online shopping.',
+      'Shop affordable clothing for men, women and kids at Clothify. Explore everyday styles, fresh arrivals and versatile outfits in our online fashion store.',
   },
 
   about: {
     path: '/about-clothify-sustainable-fashion',
-    title: 'About Clothify | Affordable, Everyday Fashion',
+    title: 'About Clothify | Affordable Fashion for Men, Women & Kids',
     description:
-      'Learn about Clothify and our goal to make stylish, comfortable, quality fashion accessible for everyone, with clothing collections designed for everyday life.',
+      'Learn about Clothify and explore affordable clothing for men, women and kids. Discover our approach to everyday style, comfortable fashion and quality clothing.',
   },
 
   products: {
     path: '/products',
-    title: 'Shop Affordable Clothing for Men, Women & Kids',
+    title: 'Shop Affordable Clothing for Men, Women & Kids | Clothify',
     description:
       'Explore affordable clothing for men, women and kids at Clothify. Shop dresses, shirts, jeans, tops and everyday styles with fresh looks for every occasion.',
   },
@@ -41,16 +40,16 @@ export const PAGE_SEO: Record<string, PageSEO> = {
 
   blog: {
     path: '/sustainable-fashion-blog',
-    title: 'Fashion Tips & Trends | Clothify Journal',
+    title: 'Fashion Tips, Trends & Styling Ideas | Clothify',
     description:
-      'Explore fashion trends, outfit ideas and practical styling tips on the Clothify journal. Find fresh inspiration for building a versatile everyday wardrobe.',
+      'Discover fashion tips, clothing trends and outfit ideas for men, women and kids. Explore everyday styling inspiration and affordable fashion ideas on the Clothify blog.',
   },
 
   contact: {
     path: '/contact-clothify',
-    title: 'Contact Clothify | Fashion Customer Support',
+    title: 'Contact Clothify | Customer Support & Enquiries',
     description:
-      'Contact the Clothify customer support team for help with products, orders or general questions. We are here to make your shopping experience easy and enjoyable.',
+      'Contact Clothify for questions about clothing, products, orders or styling. Reach our customer support team for help with your shopping enquiries and general questions.',
   },
 
   cart: {

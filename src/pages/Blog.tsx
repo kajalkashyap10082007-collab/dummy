@@ -11,7 +11,7 @@ export function Blog() {
     "@type": "Blog",
     "name": "Fashion Tips & Trends Blog | Clothify",
     "description": "Explore fashion tips, outfit ideas, clothing trends and affordable styling inspiration for men, women and kids on the Clothify blog.",
-    "url": "https://dummy-mauve.vercel.app/sustainable-fashion-blog",
+    "url": `${SITE_URL}${PAGE_SEO.blog.path}`,
     "blogPost": blogPosts.map((post) => ({ "@type": "BlogPosting", "headline": post.title, "description": post.excerpt, "datePublished": new Date(post.date).toISOString().slice(0, 10), "articleSection": post.category, "image": post.image, "url": `https://dummy-mauve.vercel.app/sustainable-fashion-blog#${post.id}` }))
   });
 
@@ -28,7 +28,7 @@ export function Blog() {
  animate={{ opacity: 1, y: 0 }}
  className="text-4xl md:text-5xl font-bold font-serif text-zinc-900 mb-4"
  >
- Clothify Fashion Blog
+Fashion Tips, Trends & Styling Ideas
  </motion.h1>
  <motion.p 
  initial={{ opacity: 0, y: 10 }}
@@ -55,7 +55,7 @@ export function Blog() {
  src={post.image} 
  width="800"
  height="600"
- alt={`${post.title} - sustainable fashion trends`} 
+alt={`${post.title} - sustainable fashion trends`}
  loading="lazy"
  decoding="async"
  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}

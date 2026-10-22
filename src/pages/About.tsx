@@ -6,9 +6,9 @@ export function About() {
   const aboutSchema = JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "AboutPage", "name": "About Clothify", "url": "https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion" },
-      { "@type": "Organization", "name": "Clothify", "description": "Affordable and sustainable fashion clothing for men, women, and kids.", "url": "https://dummy-mauve.vercel.app/" },
-      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dummy-mauve.vercel.app/" }, { "@type": "ListItem", "position": 2, "name": "About", "item": "https://dummy-mauve.vercel.app/about-clothify-sustainable-fashion" }] }
+     { "@type": "AboutPage", "name": "About Clothify", "url": `${SITE_URL}${PAGE_SEO.about.path}` },
+    { "@type": "Organization", "name": "Clothify", "description": "Affordable clothing and everyday fashion for men, women, and kids.", "url": SITE_URL },
+      { "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL }, { "@type": "ListItem", "position": 2,"name": "About", "item": `${SITE_URL}${PAGE_SEO.about.path}` }] }
     ]
   });
 
@@ -27,7 +27,7 @@ export function About() {
  animate={{ opacity: 1, y: 0 }}
  className="text-4xl md:text-5xl font-bold font-serif mb-6 text-zinc-900 "
  >
- About Clothify: Affordable & Sustainable Fashion
+<h1>About Clothify: Affordable Fashion for Men, Women & Kids</h1>
  </motion.h1>
  <motion.p 
  initial={{ opacity: 0, y: 10 }}
@@ -51,7 +51,7 @@ export function About() {
  >
  <img 
  src="https://images.unsplash.com/photo-1560243563-062bfc001d68?auto=format&fit=crop&q=80&fm=webp&w=800" 
- alt="Clothify team working on ethical sustainable fashion" 
+ alt="Clothify affordable clothing and everyday fashion collection"
  width="800"
  height="600"
  decoding="async"

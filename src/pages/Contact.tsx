@@ -133,6 +133,7 @@ export function Contact() {
  <input
  type="text"
  id="name"
+ autoComplete="name"
  required
  value={formData.name}
  onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
@@ -144,6 +145,7 @@ export function Contact() {
  <input
  type="email"
  id="email"
+ autoComplete="email"
  required
  value={formData.email}
  onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
@@ -156,6 +158,7 @@ export function Contact() {
  <input
  type="text"
  id="subject"
+ autoComplete="off"
  required
  value={formData.subject}
  onChange={(e) => setFormData(p => ({ ...p, subject: e.target.value }))}
@@ -166,6 +169,7 @@ export function Contact() {
  <label htmlFor="message" className="block text-xs font-medium text-zinc-700 uppercase tracking-widest mb-2">Message</label>
  <textarea
  id="message"
+ aria-label="Your message to Clothify customer support"
  required
  rows={5}
  value={formData.message}
