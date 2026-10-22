@@ -9,12 +9,14 @@ export interface PageSEO {
 }
 
 export const PAGE_SEO: Record<string, PageSEO> = {
-  home: {
-    path: '/',
-    title: 'Clothify | Online Fashion Store for Men, Women & Kids',
-    description:
-      'Shop affordable clothing for men, women and kids at Clothify. Explore everyday styles, fresh arrivals and versatile outfits in our online fashion store.',
-  },
+ 
+home: {
+  path: '/',
+  title: 'Affordable Clothing for Men, Women & Kids | Clothify',
+  description:
+    'Shop affordable clothing for men, women and kids at Clothify. Discover everyday styles, new arrivals and versatile outfits for every occasion.',
+},
+
 
   about: {
     path: '/about-clothify-sustainable-fashion',
