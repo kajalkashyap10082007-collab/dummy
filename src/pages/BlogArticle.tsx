@@ -1,12 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { SITE_URL } from '../seo';
+import { BLOG_ARTICLES, SITE_URL } from '../seo';
 import { blogPosts } from '../data';
 
-const articles: Record<string, { title: string; description: string; intro: string; sections: { heading: string; paragraphs: string[] }[] }> = {
+const articleContent: Record<string, { intro: string; sections: { heading: string; paragraphs: string[] }[] }> = {
   'fall-fashion-trends-2026': {
-    title: 'Fall Fashion Trends 2026: Everyday Outfit Ideas | Clothify',
-    description: 'Explore fall fashion trends for 2026, practical layering tips, versatile clothing and everyday outfit ideas for your seasonal wardrobe.',
     intro: 'Building a seasonal wardrobe does not mean buying every new trend. Choose versatile pieces that work together, feel comfortable and suit your everyday routine.',
     sections: [
       {
@@ -44,8 +42,6 @@ const articles: Record<string, { title: string; description: string; intro: stri
     ]
   },
   'sustainable-fashion-why-it-matters': {
-    title: 'Sustainable Fashion: Practical Ways to Shop More Mindfully | Clothify',
-    description: 'Learn practical sustainable fashion habits, from choosing durable clothing and rewearing outfits to caring for clothes and reducing waste.',
     intro: 'Sustainable fashion is about making more thoughtful clothing choices. No single purchase makes a wardrobe sustainable, but everyday habits can help reduce unnecessary buying and clothing waste.',
     sections: [
       {
@@ -81,8 +77,6 @@ const articles: Record<string, { title: string; description: string; intro: stri
     ]
   },
   'style-a-classic-white-tshirt': {
-    title: '5 Ways to Style a White T-Shirt | Everyday Outfit Guide | Clothify',
-    description: 'Discover five easy ways to style a white T-shirt with jeans, layered shirts, smart casual outfits and accessories for everyday wear.',
     intro: 'A white T-shirt is a versatile wardrobe basic. With a few simple changes to the layers, bottoms and accessories, you can create different outfits without making styling complicated.',
     sections: [
       {
@@ -121,15 +115,11 @@ const articles: Record<string, { title: string; description: string; intro: stri
 
 export function BlogArticle() {
   const { slug } = useParams<{ slug: string }>();
-  const article = slug ? articles[slug] : undefined;
-  const post = blogPosts.find((item) => {
-    if (slug === 'fall-fashion-trends-2026') return item.id === 'b1';
-    if (slug === 'sustainable-fashion-why-it-matters') return item.id === 'b2';
-    if (slug === 'style-a-classic-white-tshirt') return item.id === 'b3';
-    return false;
-  });
+  const article = BLOG_ARTICLES.find((item) => item.slug === slug);
+  const content = slug ? articleContent[slug] : undefined;
+  const post = article && blogPosts.find((item) => item.id === article.postId);
 
-  if (!article || !post) {
+  if (!article || !content || !post) {
     return (
       <main className="max-w-3xl mx-auto px-6 py-16">
         <SEO
@@ -145,7 +135,7 @@ export function BlogArticle() {
     );
   }
 
-  const canonicalUrl = `${SITE_URL}/blog/${slug}`;
+  const canonicalUrl = `${SITE_URL}${article.path}`;
 
   const schema = JSON.stringify({
     '@context': 'https://schema.org',
@@ -195,7 +185,7 @@ export function BlogArticle() {
         </h1>
 
         <p className="text-lg text-zinc-600 leading-relaxed mb-8">
-          {article.intro}
+          {content.intro}
         </p>
 
         <img
@@ -209,7 +199,7 @@ export function BlogArticle() {
         />
 
         <div className="space-y-8 text-zinc-700 leading-8">
-          {article.sections.map((section) => (
+          {content.sections.map((section) => (
             <section key={section.heading}>
               <h2 className="text-2xl font-bold font-serif text-zinc-900 mb-3">
                 {section.heading}

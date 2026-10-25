@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { products } from '../src/data';
-import { PAGE_SEO, SITE_URL, getProductSEO } from '../src/seo';
+import { blogPosts, products } from '../src/data';
+import { BLOG_ARTICLES, PAGE_SEO, SITE_URL, getProductSEO } from '../src/seo';
 
 const distDirectory = join(process.cwd(), 'dist');
 const template = readFileSync(join(distDirectory, 'index.html'), 'utf8');
@@ -62,10 +62,13 @@ function writeRoute(path: string, html: string) {
 }
 
 const publicPages = Object.values(PAGE_SEO).filter((page) => !page.noIndex && !page.canonicalPath);
+
 const sitemapPaths = [
   ...publicPages.map((page) => page.path),
   ...products.map((product) => `/product/${product.id}`),
+  ...BLOG_ARTICLES.map((article) => article.path),
 ];
+
 const sitemapXml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -90,4 +93,20 @@ for (const product of products) {
   writeRoute(path, createDocument({ ...page, ogType: 'product' }, path, product.image));
 }
 
-console.log(`Generated sitemap for ${sitemapPaths.length} indexable URLs and route metadata for ${Object.keys(PAGE_SEO).length + products.length} pages.`);
+for (const article of BLOG_ARTICLES) {
+  const post = blogPosts.find((item) => item.id === article.postId);
+  if (!post) {
+    throw new Error(`Missing blog post "${article.postId}" for article route "${article.path}".`);
+  }
+
+  writeRoute(
+    article.path,
+    createDocument(
+      { ...article, ogType: 'article' },
+      article.path,
+      post.image,
+    ),
+  );
+}
+
+console.log(`Generated sitemap for ${sitemapPaths.length} indexable URLs and route metadata for ${Object.keys(PAGE_SEO).length + products.length + BLOG_ARTICLES.length} pages.`);

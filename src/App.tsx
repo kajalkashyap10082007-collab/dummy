@@ -14,6 +14,9 @@ const Checkout = lazy(() => import('./pages/Checkout').then(module => ({ default
 const Login = lazy(() => import('./pages/Login').then(module => ({ default: module.Login })));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation').then(module => ({ default: module.OrderConfirmation })));
 const Blog = lazy(() => import('./pages/Blog').then(module => ({ default: module.Blog })));
+const BlogArticle = lazy(() =>
+  import('./pages/BlogArticle').then(module => ({ default: module.BlogArticle }))
+);
 const Contact = lazy(() => import('./pages/Contact').then(module => ({ default: module.Contact })));
 const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
 
@@ -42,6 +45,7 @@ export default function App() {
                 <Route path="order-confirmation" element={<OrderConfirmation />} />
                 <Route path="login" element={<Login />} />
                 <Route path="sustainable-fashion-blog" element={<Blog />} />
+                <Route path="blog/:slug" element={<BlogArticle />} />
                 <Route path="contact-clothify" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
               </Route>

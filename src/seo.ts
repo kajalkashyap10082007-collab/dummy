@@ -8,6 +8,49 @@ export interface PageSEO {
   noIndex?: boolean;
 }
 
+export interface BlogArticleSEO {
+  slug: string;
+  postId: string;
+  path: string;
+  title: string;
+  description: string;
+}
+
+export const BLOG_ARTICLES: BlogArticleSEO[] = [
+  {
+    slug: 'fall-fashion-trends-2026',
+    postId: 'b1',
+    path: '/blog/fall-fashion-trends-2026',
+    title: 'Fall Fashion Trends 2026: Everyday Outfit Ideas | Clothify',
+    description:
+      'Explore fall fashion trends for 2026, with versatile outfit ideas and everyday styling inspiration from Clothify.',
+  },
+  {
+    slug: 'sustainable-fashion-why-it-matters',
+    postId: 'b2',
+    path: '/blog/sustainable-fashion-why-it-matters',
+    title: 'Sustainable Fashion: Why It Matters | Clothify',
+    description:
+      'Learn why sustainable fashion matters and discover practical ways to make thoughtful clothing choices with Clothify.',
+  },
+  {
+    slug: 'style-a-classic-white-tshirt',
+    postId: 'b3',
+    path: '/blog/style-a-classic-white-tshirt',
+    title: '5 Ways to Style a Classic White T-Shirt | Clothify',
+    description:
+      'Discover five easy ways to style a classic white T-shirt for everyday outfits and different occasions.',
+  },
+];
+
+export function getBlogArticlePath(postId: string) {
+  const article = BLOG_ARTICLES.find((item) => item.postId === postId);
+  if (!article) {
+    throw new Error(`No blog article route configured for post "${postId}".`);
+  }
+  return article.path;
+}
+
 export const PAGE_SEO: Record<string, PageSEO> = {
  
 home: {

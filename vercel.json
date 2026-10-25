@@ -40,11 +40,18 @@
       "source": "/order-confirmation",
       "destination": "/order-confirmation/index.html"
     },
-    
-{
-  "source": "/blog/:slug",
-  "destination": "/blog/:slug/index.html"
-},
+    {
+      "source": "/blog/fall-fashion-trends-2026",
+      "destination": "/blog/fall-fashion-trends-2026/index.html"
+    },
+    {
+      "source": "/blog/sustainable-fashion-why-it-matters",
+      "destination": "/blog/sustainable-fashion-why-it-matters/index.html"
+    },
+    {
+      "source": "/blog/style-a-classic-white-tshirt",
+      "destination": "/blog/style-a-classic-white-tshirt/index.html"
+    },
 
     {
       "source": "/(.*)",

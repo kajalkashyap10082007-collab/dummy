@@ -3,7 +3,7 @@ import { blogPosts } from '../data';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { PAGE_SEO, SITE_URL } from '../seo';
+import { getBlogArticlePath, PAGE_SEO, SITE_URL } from '../seo';
 
 export function Blog() {
   const blogSchema = JSON.stringify({
@@ -12,7 +12,7 @@ export function Blog() {
     "name": "Fashion Tips & Trends Blog | Clothify",
     "description": "Explore fashion tips, outfit ideas, clothing trends and affordable styling inspiration for men, women and kids on the Clothify blog.",
     "url": `${SITE_URL}${PAGE_SEO.blog.path}`,
-    "blogPost": blogPosts.map((post) => ({ "@type": "BlogPosting", "headline": post.title, "description": post.excerpt, "datePublished": new Date(post.date).toISOString().slice(0, 10), "articleSection": post.category, "image": post.image, "url": `https://dummy-mauve.vercel.app/sustainable-fashion-blog#${post.id}` }))
+    "blogPost": blogPosts.map((post) => ({ "@type": "BlogPosting", "headline": post.title, "description": post.excerpt, "datePublished": new Date(post.date).toISOString().slice(0, 10), "articleSection": post.category, "image": post.image, "url": `${SITE_URL}${getBlogArticlePath(post.id)}` }))
   });
 
  return (
@@ -50,12 +50,15 @@ Fashion Tips, Trends & Styling Ideas
  transition={{ delay: i * 0.1, duration: 0.5 }}
  className="group flex flex-col"
  >
- <Link to={`/sustainable-fashion-blog#${post.id}`} className="block overflow-hidden rounded-sm aspect-[4/3] mb-6 relative">
+<Link
+  to={getBlogArticlePath(post.id)}
+  className="block overflow-hidden rounded-sm aspect-[4/3] mb-6 relative"
+>
  <img 
  src={post.image} 
  width="800"
  height="600"
-alt={`${post.title} - sustainable fashion trends`}
+alt={`${post.title} - ${post.category} fashion article`}
  loading="lazy"
  decoding="async"
  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&fm=webp&w=800' }}
@@ -67,7 +70,10 @@ alt={`${post.title} - sustainable fashion trends`}
  </Link>
  <div className="flex flex-col flex-grow">
  <span className="text-xs text-zinc-500 mb-3">{post.date}</span>
- <Link to={`/sustainable-fashion-blog#${post.id}`} className="text-xl font-serif font-bold text-zinc-900 mb-3 hover:text-amber-500 transition-colors line-clamp-2">
+ <Link
+  to={getBlogArticlePath(post.id)}
+  className="text-xl font-serif font-bold text-zinc-900 mb-3 hover:text-amber-500 transition-colors line-clamp-2"
+>
  {post.title}
  </Link>
  <p className="text-sm text-zinc-600 mb-6 line-clamp-3 leading-relaxed">
@@ -83,7 +89,15 @@ alt={`${post.title} - sustainable fashion trends`}
  <nav aria-label="More fashion articles" className="mt-16 border-t border-zinc-200 pt-8">
  <h2 className="text-xl font-serif font-bold text-zinc-900 mb-4">More from the journal</h2>
  <div className="flex flex-wrap gap-x-6 gap-y-3">
- {blogPosts.map((post) => <Link key={post.id} to={`/sustainable-fashion-blog#${post.id}`} className="text-sm font-semibold text-zinc-600 hover:text-amber-500">{post.title}</Link>)}
+{blogPosts.map((post) => (
+    <Link
+      key={post.id}
+      to={getBlogArticlePath(post.id)}
+      className="text-sm font-semibold text-zinc-600 hover:text-amber-500"
+    >
+      {post.title}
+    </Link>
+))}
  </div>
  </nav>
  </div>
