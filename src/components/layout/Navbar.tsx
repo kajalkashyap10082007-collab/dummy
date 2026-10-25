@@ -17,7 +17,11 @@ import '../../styles/navbar-animations.css';
 const MEGA_MENUS: Record<
   string,
   {
-    columns: { title: string; items: string[] }[];
+    columns: {
+      title: string;
+      category: 'Men' | 'Women' | 'Kids';
+      items: { label: string; search: string }[];
+    }[];
     featuredImages?: { url: string; title: string }[];
   }
 > = {
@@ -25,30 +29,37 @@ const MEGA_MENUS: Record<
     columns: [
       {
         title: 'Men',
+        category: 'Men',
         items: [
-          'T-Shirts',
-          'Casual Shirts',
-          'Formal Shirts',
-          'Sweatshirts',
-          'Jackets'
+          { label: 'T-Shirts', search: 't-shirt' },
+          { label: 'Casual Shirts', search: 'shirt' },
+          { label: 'Jeans', search: 'jeans' },
+          { label: 'Trousers', search: 'trousers' },
+          { label: 'Jackets', search: 'jacket' },
+          { label: 'Ethnic Wear', search: 'kurta' }
         ]
       },
       {
         title: 'Women',
-        items: ['Kurtas & Suits', 'Dresses', 'Tops', 'Jeans', 'Sarees']
+        category: 'Women',
+        items: [
+          { label: 'Dresses', search: 'dress' },
+          { label: 'Tops', search: 'top' },
+          { label: 'Kurtis', search: 'kurti' },
+          { label: 'Jeans', search: 'jeans' },
+          { label: 'Co-ord Sets', search: 'co-ord' },
+          { label: 'Jackets', search: 'jacket' },
+          { label: 'Ethnic Wear', search: 'ethnic' }
+        ]
       },
       {
         title: 'Kids',
-        items: ['Boys Clothing', 'Girls Clothing', 'Footwear', 'Toys']
-      },
-      {
-        title: 'Accessories',
+        category: 'Kids',
         items: [
-          'Watches',
-          'Backpacks',
-          'Belts',
-          'Wallets',
-          'Sunglasses'
+          { label: 'Boys Clothing', search: 'boys' },
+          { label: 'Girls Clothing', search: 'girls' },
+          { label: 'Casual Outfits', search: 'casual' },
+          { label: 'Occasion Outfits', search: 'festive' }
         ]
       }
     ],
@@ -78,7 +89,7 @@ const LINKS = [
   },
   {
     name: 'Products',
-    path: '/products',
+    path: '/premium-clothing-collection',
     hasMegaMenu: true
   },
   {
@@ -129,7 +140,7 @@ export function Navbar() {
           className="announcement-bar bg-gradient-to-r from-blue-700 via-emerald-500 to-amber-500 text-white text-xs font-bold py-2 px-4 flex items-center justify-center relative overflow-hidden"
         >
           <span className="tracking-wide text-center drop-shadow-sm">
-            FREE SHIPPING ON ORDERS OVER ₹2,999 • SHOP THE SUMMER SALE NOW
+            Discover clothing for Men, Women and Kids
           </span>
 
           <button
@@ -146,17 +157,9 @@ export function Navbar() {
       <div className="bg-black text-amber-500 py-2 px-4 sm:px-6 lg:px-8 hidden md:block text-[11px] font-bold tracking-widest uppercase">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-6 text-amber-500">
-            <span className="hover:text-amber-400 cursor-pointer transition-colors">
-              Track Order
-            </span>
-
-            <span className="hover:text-amber-400 cursor-pointer transition-colors">
-              Store Locator
-            </span>
-
-            <span className="hover:text-amber-400 cursor-pointer transition-colors">
+            <Link to="/contact-clothify" className="hover:text-amber-400 transition-colors">
               Customer Care
-            </span>
+            </Link>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -250,6 +253,8 @@ export function Navbar() {
             >
               {LINKS.map((link) => {
                 const featuredImages = MEGA_MENUS[link.name]?.featuredImages;
+                const isActive = location.pathname === link.path ||
+                  (link.name === 'Products' && location.pathname === '/products');
 
                 return (
                   <div
@@ -272,16 +277,14 @@ export function Navbar() {
                       to={link.path}
                       className={cn(
                         'text-[13px] font-bold tracking-[0.05em] uppercase transition-colors hover:text-blue-700 relative h-full flex items-center',
-                        location.pathname + location.search === link.path ||
-                          hoveredMenu === link.name
+                        isActive || hoveredMenu === link.name
                           ? 'text-blue-700'
                           : 'text-zinc-900'
                       )}
                     >
                       {link.name}
 
-                      {(location.pathname + location.search === link.path ||
-                        hoveredMenu === link.name) && (
+                      {(isActive || hoveredMenu === link.name) && (
                         <div
                           className="nav-indicator absolute bottom-0 left-0 right-0 h-[4px] bg-blue-700 rounded-t-md"
                         />
@@ -306,23 +309,25 @@ export function Navbar() {
                                   key={col.title}
                                   className="flex flex-col min-w-[150px]"
                                 >
-                                  <h4 className="text-blue-700 font-bold uppercase tracking-widest text-[13px] mb-4">
-                                    {col.title}
-                                  </h4>
+                                  <Link
+                                  to={`/premium-clothing-collection?category=${encodeURIComponent(col.category)}`}
+                                  className="text-blue-700 font-bold uppercase tracking-widest text-[13px] mb-4 hover:underline"
+                                  onClick={() => setHoveredMenu(null)}
+                                  >
+                                  {col.title}
+                                  </Link>
 
                                   <ul className="space-y-3">
                                     {col.items.map((item) => (
-                                      <li key={item}>
+                                      <li key={item.label}>
                                         <Link
-                                          to={`/premium-clothing-collection?category=${encodeURIComponent(
-                                            col.title
-                                          )}`}
+                                          to={`/premium-clothing-collection?category=${encodeURIComponent(col.category)}&search=${encodeURIComponent(item.search)}`}
                                           className="text-zinc-600 hover:text-blue-700 hover:font-bold text-sm tracking-wide transition-all"
                                           onClick={() =>
                                             setHoveredMenu(null)
                                           }
                                         >
-                                          {item}
+                                          {item.label}
                                         </Link>
                                       </li>
                                     ))}
@@ -376,7 +381,7 @@ export function Navbar() {
 
                   if (searchQuery.trim()) {
                     navigate(
-                      '/products?search=' +
+                      '/premium-clothing-collection?search=' +
                         encodeURIComponent(searchQuery)
                     );
                   }
@@ -385,7 +390,7 @@ export function Navbar() {
               >
                 <input
                   type="text"
-                  placeholder="Search dresses, shirts, jeans, sneakers..."
+                  placeholder="Search dresses, shirts, jeans, kurtas..."
                   value={searchQuery}
                   onChange={(e) =>
                     setSearchQuery(e.target.value)
@@ -402,17 +407,17 @@ export function Navbar() {
                 </button>
               </form>
 
-              <button
-                aria-label="Search Mobile"
-                onClick={() => navigate('/products')}
+              <Link
+                aria-label="Browse and search products"
+                to="/premium-clothing-collection"
                 className="lg:hidden p-2 text-zinc-600 hover:text-blue-700 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <Search className="w-5 h-5" />
-              </button>
+              </Link>
 
-              <button
+              <Link
                 aria-label="Wishlist"
-                onClick={() => navigate('/wishlist')}
+                to="/wishlist"
                 className="p-2 text-zinc-600 hover:text-blue-700 transition-colors relative min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <Heart className="w-5 h-5 hover:scale-110 transition-transform" />
@@ -422,13 +427,11 @@ export function Navbar() {
                     {wishlist.length}
                   </span>
                 )}
-              </button>
+              </Link>
 
-              <button
+              <Link
                 aria-label="User Account"
-                onClick={() =>
-                  navigate(user ? '/' : '/login')
-                }
+                to={user ? '/' : '/login'}
                 className="p-2 text-zinc-600 hover:text-blue-700 transition-colors hidden sm:flex min-w-[44px] min-h-[44px] items-center justify-center"
               >
                 {user ? (
@@ -438,11 +441,11 @@ export function Navbar() {
                 ) : (
                   <User className="w-5 h-5" />
                 )}
-              </button>
+              </Link>
 
-              <button
+              <Link
                 aria-label="Shopping Cart"
-                onClick={() => navigate('/cart')}
+                to="/cart"
                 className="p-2 text-zinc-600 hover:text-blue-700 transition-colors relative group min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -455,7 +458,7 @@ export function Navbar() {
                     )}
                   </span>
                 )}
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -516,35 +519,45 @@ export function Navbar() {
                   ))}
                 </nav>
 
+                <nav aria-label="Shop by category" className="mt-6 border-t border-zinc-100 pt-6 flex flex-col gap-4">
+                  {(['Men', 'Women', 'Kids'] as const).map((category) => (
+                    <Link
+                      key={category}
+                      to={`/premium-clothing-collection?category=${category}`}
+                      className="text-sm font-bold uppercase tracking-widest text-zinc-600 hover:text-blue-700"
+                    >
+                      {category === 'Kids' ? "Kids' Collection" : `${category}'s Collection`}
+                    </Link>
+                  ))}
+                  <Link
+                    to="/premium-clothing-collection?trending=true"
+                    className="text-sm font-bold uppercase tracking-widest text-zinc-600 hover:text-blue-700"
+                  >
+                    Trending Now
+                  </Link>
+                </nav>
+
                 <div className="mt-auto border-t border-zinc-100 pt-6">
                   <div className="space-y-4">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        navigate('/wishlist');
-                      }}
+                    <Link
+                      to="/wishlist"
                       className="flex items-center space-x-4 text-zinc-600 hover:text-blue-700 transition-colors cursor-pointer text-left"
                     >
                       <Heart className="w-5 h-5" />
                       <span className="font-bold tracking-widest uppercase">
                         Wishlist
                       </span>
-                    </button>
+                    </Link>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        navigate(user ? '/' : '/login');
-                      }}
+                    <Link
+                      to={user ? '/' : '/login'}
                       className="flex items-center space-x-4 text-zinc-600 hover:text-blue-700 transition-colors cursor-pointer text-left"
                     >
                       <User className="w-5 h-5" />
                       <span className="font-bold tracking-widest uppercase">
                         {user ? 'My Account' : 'Sign In'}
                       </span>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useStore } from '../store';
 import { SEO } from '../components/SEO';
@@ -6,13 +6,7 @@ import { PAGE_SEO, SITE_URL } from '../seo';
 
 export function Cart() {
   const { cart, removeFromCart, updateQuantity } = useStore();
-  const navigate = useNavigate();
-
   const subtotal = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
-  const totalOriginalPrice = cart.reduce((total, item) => total + (item.product.originalPrice || item.product.price) * item.quantity, 0);
-  const discount = totalOriginalPrice - subtotal;
-  const shipping = subtotal > 1999 || subtotal === 0 ? 0 : 99;
-  const finalTotal = subtotal + shipping;
 
   if (cart.length === 0) {
     return (
@@ -87,31 +81,26 @@ export function Cart() {
                 <span>Subtotal</span>
                 <span>₹{subtotal.toLocaleString()}</span>
               </div>
-              {discount > 0 && (
-                <div className="flex justify-between text-emerald-600">
-                  <span>Discount</span>
-                  <span>-₹{discount.toLocaleString()}</span>
-                </div>
-              )}
               <div className="flex justify-between text-zinc-600">
                 <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+                <Link to="/contact-clothify#shipping-policy" className="text-blue-700 hover:underline">Confirm with Clothify</Link>
               </div>
             </div>
             
             <div className="border-t border-zinc-200 pt-4 mb-8">
               <div className="flex justify-between items-center">
-                <span className="font-bold text-zinc-900">Total</span>
-                <span className="text-2xl font-black text-zinc-900">₹{finalTotal.toLocaleString()}</span>
+                <span className="font-bold text-zinc-900">Items subtotal</span>
+                <span className="text-2xl font-black text-zinc-900">₹{subtotal.toLocaleString()}</span>
               </div>
+              <p className="text-xs text-zinc-500 mt-3">Shipping terms are not listed. Please confirm them before ordering.</p>
             </div>
             
-            <button 
-              onClick={() => navigate('/checkout')}
+            <Link
+              to="/checkout"
               className="w-full bg-blue-700 text-white py-4 rounded-full font-black uppercase tracking-widest hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
             >
               Proceed to Checkout <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

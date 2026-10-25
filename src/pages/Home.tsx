@@ -10,28 +10,28 @@ import '../styles/hero-animations.css';
 const HERO_SLIDES = [
   {
     id: 1,
-    subtitle: 'End of Reason Sale',
-    alt: 'Fashion models showcasing stylish clothing',
-    title: '50-80% OFF',
-    desc: 'On global brands & exclusive collections. The biggest fashion event is live.',
+    subtitle: 'New Season Styles',
+    alt: 'Fashion models showcasing everyday clothing styles',
+    title: 'EVERYDAY STYLE',
+    desc: 'Explore clothing for Men, Women and Kids.',
     image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&fm=webp&w=1920',
     fallback: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&fm=webp&w=1920',
   },
   {
     id: 2,
-    subtitle: 'New Launch',
-    alt: 'Red athletic shoe from the sportswear collection',
-    title: 'MIN 30% + EXTRA 5% OFF',
-    desc: 'Breathable knitted upper shoes and sportswear for ultimate comfort.',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&fm=webp&w=1920',
-    fallback: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&fm=webp&w=1920',
+    subtitle: 'Style Picks',
+    alt: 'Clothing collection available from Clothify',
+    title: 'EXPLORE THE COLLECTION',
+    desc: 'Browse shirts, jeans, dresses and more.',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&fm=webp&w=1920',
+    fallback: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&fm=webp&w=1920',
   },
   {
     id: 3,
-    subtitle: 'Winter Collection',
-    alt: 'Model showcasing a contemporary fashion outfit',
-    title: 'STAY WARM, STAY STYLISH',
-    desc: 'Cozy sweaters, premium jackets, and winter essentials up to 40% off.',
+    subtitle: 'Everyday Layers',
+    alt: 'Model showcasing a contemporary clothing outfit',
+    title: 'STYLE FOR EVERY SEASON',
+    desc: 'Browse jackets, shirts, dresses and occasion outfits.',
     image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&fm=webp&w=1920',
     fallback: 'https://images.unsplash.com/photo-1502163140606-888448ae8cfe?auto=format&fit=crop&q=80&fm=webp&w=1920',
   }
@@ -50,8 +50,24 @@ export function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const newArrivals = useMemo(() => products.filter(p => p.isTrending).slice(0, 4), []);
-  const bestSellers = useMemo(() => products.filter(p => p.rating >= 4.5).slice(0, 4), []);
+  const featuredStyles = useMemo(() => {
+    const categoryPicks = ['Men', 'Women', 'Kids'].flatMap(category =>
+      products.filter(product => product.category === category && product.isTrending).slice(0, 1)
+    );
+    const additionalPick = products
+      .filter(product => product.isTrending && !categoryPicks.some(pick => pick.id === product.id))
+      .slice(0, 1);
+    return [...categoryPicks, ...additionalPick];
+  }, []);
+  const moreStyles = useMemo(() => {
+    const categoryPicks = ['Men', 'Women', 'Kids'].flatMap(category =>
+      products.filter(product => product.category === category && !product.isTrending).slice(0, 1)
+    );
+    const additionalPick = products
+      .filter(product => !product.isTrending && !categoryPicks.some(pick => pick.id === product.id))
+      .slice(0, 1);
+    return [...categoryPicks, ...additionalPick];
+  }, []);
 
   const homeSchema = useMemo(() => JSON.stringify({
     "@context": "https://schema.org",
@@ -185,22 +201,22 @@ export function Home() {
       {/* Trust Badges */}
       <section className="bg-white py-6 border-b border-zinc-200">
         <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-6 md:gap-12">
-          <div className="flex items-center text-zinc-600">
+          <Link to="/contact-clothify#shipping-policy" className="flex items-center text-zinc-600 hover:text-blue-700">
             <Truck className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
-            <span className="text-sm font-bold uppercase tracking-wider">Free Shipping</span>
-          </div>
-          <div className="flex items-center text-zinc-600">
+            <span className="text-sm font-bold uppercase tracking-wider">Shipping Information</span>
+          </Link>
+          <Link to="/contact-clothify#returns-exchanges" className="flex items-center text-zinc-600 hover:text-blue-700">
             <RefreshCw className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
-            <span className="text-sm font-bold uppercase tracking-wider">14-Day Returns</span>
-          </div>
-          <div className="flex items-center text-zinc-600">
+            <span className="text-sm font-bold uppercase tracking-wider">Returns Information</span>
+          </Link>
+          <Link to="/contact-clothify#size-guide" className="flex items-center text-zinc-600 hover:text-blue-700">
             <ShieldCheck className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
-            <span className="text-sm font-bold uppercase tracking-wider">Secure Payment</span>
-          </div>
-          <div className="flex items-center text-zinc-600">
+            <span className="text-sm font-bold uppercase tracking-wider">Size Guide</span>
+          </Link>
+          <Link to="/contact-clothify" className="flex items-center text-zinc-600 hover:text-blue-700">
             <Star className="w-5 h-5 text-blue-700 mr-2 flex-shrink-0" />
-            <span className="text-sm font-bold uppercase tracking-wider">Top Brands</span>
-          </div>
+            <span className="text-sm font-bold uppercase tracking-wider">Contact Support</span>
+          </Link>
         </div>
       </section>
 
@@ -209,9 +225,9 @@ export function Home() {
         {/* Deal of the Day Banner */}
         <div className="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl overflow-hidden shadow-xl flex flex-col md:flex-row">
           <div className="p-8 md:p-12 flex flex-col justify-center text-white md:w-1/2">
-            <span className="bg-amber-400 text-zinc-900 text-xs font-black px-3 py-1 rounded-sm uppercase tracking-widest w-max mb-4">Deal of the Day</span>
-            <h2 className="text-3xl md:text-5xl font-black mb-4">Premium Denim Collection</h2>
-            <p className="text-blue-100 mb-8 max-w-md leading-relaxed">Upgrade your wardrobe with our latest sustainable denim styles. Comfort meets durability.</p>
+            <span className="bg-amber-400 text-zinc-900 text-xs font-black px-3 py-1 rounded-sm uppercase tracking-widest w-max mb-4">Denim Edit</span>
+            <h2 className="text-3xl md:text-5xl font-black mb-4">Denim & Jeans</h2>
+            <p className="text-blue-100 mb-8 max-w-md leading-relaxed">Browse jeans and denim styles in the Men and Women collections.</p>
             <Link to="/products?search=jeans" className="bg-white text-blue-700 px-8 py-3 rounded-sm font-bold uppercase tracking-widest text-sm hover:bg-zinc-100 transition-colors w-max flex items-center min-h-[44px]">
               Shop Denim <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
@@ -232,11 +248,11 @@ export function Home() {
           </div>
         </div>
 
-        {/* New Arrivals */}
+        {/* Featured Styles */}
         <section>
           <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-black text-zinc-900 mb-2">New Arrivals</h2>
+              <h2 className="text-3xl font-black text-zinc-900 mb-2">Featured Styles</h2>
               <div className="w-20 h-1 bg-blue-700 rounded-full"></div>
             </div>
             <Link to="/products" className="text-blue-700 font-bold text-sm hover:text-blue-800 flex items-center uppercase tracking-widest">
@@ -245,7 +261,7 @@ export function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {newArrivals.map((product) => (
+            {featuredStyles.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -260,30 +276,30 @@ export function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link to="/products?category=Men" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Men's cotton t-shirts" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Men's clothing collection" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
-                  <h3 className="text-white text-2xl font-black mb-1">T-Shirts</h3>
+                  <h3 className="text-white text-2xl font-black mb-1">Men's Collection</h3>
                   <span className="text-blue-400 text-sm font-bold uppercase tracking-widest group-hover:text-amber-400 transition-colors">Explore</span>
                 </div>
               </div>
             </Link>
 
             <Link to="/products?category=Women" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Women's evening dresses" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Women's clothing collection" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
-                  <h3 className="text-white text-2xl font-black mb-1">Dresses</h3>
+                  <h3 className="text-white text-2xl font-black mb-1">Women's Collection</h3>
                   <span className="text-blue-400 text-sm font-bold uppercase tracking-widest group-hover:text-amber-400 transition-colors">Explore</span>
                 </div>
               </div>
             </Link>
 
             <Link to="/products?category=Kids" className="group relative h-[300px] rounded-2xl overflow-hidden shadow-md">
-              <img src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Kids' fashion accessories" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=800" srcSet="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=480 480w, https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=800 800w" sizes="(max-width: 767px) 100vw, 33vw" alt="Kids' clothing collection" width="800" height="1000" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                 <div>
-                  <h3 className="text-white text-2xl font-black mb-1">Accessories</h3>
+                  <h3 className="text-white text-2xl font-black mb-1">Kids' Clothing</h3>
                   <span className="text-blue-400 text-sm font-bold uppercase tracking-widest group-hover:text-amber-400 transition-colors">Explore</span>
                 </div>
               </div>
@@ -291,11 +307,11 @@ export function Home() {
           </div>
         </section>
 
-        {/* Best Sellers */}
+        {/* More Styles */}
         <section>
           <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-black text-zinc-900 mb-2">Best Sellers</h2>
+              <h2 className="text-3xl font-black text-zinc-900 mb-2">More Styles</h2>
               <div className="w-20 h-1 bg-blue-700 rounded-full"></div>
             </div>
             <Link to="/products" className="text-blue-700 font-bold text-sm hover:text-blue-800 flex items-center uppercase tracking-widest">
@@ -304,7 +320,7 @@ export function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {bestSellers.map((product) => (
+            {moreStyles.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

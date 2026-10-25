@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Star, Heart, ShoppingBag, Truck, ArrowLeft, RefreshCw, ShieldCheck } from 'lucide-react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Heart, ShoppingBag, Truck, ArrowLeft, RefreshCw, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { products } from '../data';
+import { ProductCard } from '../components/ProductCard';
 import { useStore } from '../store';
 import { useToast } from '../components/Toast';
 import { SEO } from '../components/SEO';
@@ -13,6 +14,9 @@ export function ProductDetails() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const product = products.find(p => p.id === id);
+  const relatedProducts = product
+    ? products.filter(item => item.category === product.category && item.id !== product.id).slice(0, 4)
+    : [];
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
   
   const [activeImage, setActiveImage] = useState(product?.image || '');
@@ -33,9 +37,9 @@ export function ProductDetails() {
       <div className="min-h-[50vh] flex flex-col items-center justify-center p-4">
         <SEO title={PAGE_SEO.notFound.title} description={PAGE_SEO.notFound.description} noIndex />
         <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-        <button onClick={() => navigate('/products')} className="text-blue-700 hover:underline">
+        <Link to="/premium-clothing-collection" className="text-blue-700 hover:underline">
           Return to Shop
-        </button>
+        </Link>
       </div>
     );
   }
@@ -127,6 +131,15 @@ export function ProductDetails() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <SEO title={productSEO.title} description={productSEO.description} schemaMarkup={productSchema} canonicalUrl={`${SITE_URL}/product/${product.id}`} ogType="product" ogImage={product.image} />
+      <nav aria-label="Breadcrumb" className="mb-5 text-sm text-zinc-500">
+        <ol className="flex flex-wrap items-center gap-2">
+          <li><Link to="/" className="hover:text-blue-700">Home</Link></li>
+          <li aria-hidden="true">/</li>
+          <li><Link to="/premium-clothing-collection" className="hover:text-blue-700">Products</Link></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" className="text-zinc-900">{product.name}</li>
+        </ol>
+      </nav>
       <button aria-label="Go back" onClick={() => navigate(-1)} className="flex items-center text-zinc-600 hover:text-blue-700 mb-8 transition-colors min-h-[44px]">
         <ArrowLeft className="w-4 h-4 mr-2" /> Back
       </button>
@@ -174,25 +187,8 @@ export function ProductDetails() {
             <span className="text-sm font-black text-blue-700 uppercase tracking-widest">{product.category}</span>
             <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 mt-2 mb-4">{product.name}</h1>
             
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex items-center text-yellow-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-current' : 'text-zinc-300'}`} />
-                ))}
-              </div>
-              <span className="text-sm text-zinc-600">({product.reviews || 0} Reviews)</span>
-            </div>
-
             <div className="flex items-end gap-3">
               <span className="text-3xl font-black text-zinc-900">₹{product.price.toLocaleString()}</span>
-              {product.originalPrice && (
-                <>
-                  <span className="text-lg text-zinc-500 line-through mb-1">₹{product.originalPrice.toLocaleString()}</span>
-                  <span className="text-sm font-black text-emerald-600 mb-1 ml-2">
-                    {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
-                  </span>
-                </>
-              )}
             </div>
           </div>
 
@@ -205,7 +201,7 @@ export function ProductDetails() {
             <div className="mb-6">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-bold text-zinc-900">Select Size</span>
-                <button className="text-sm text-blue-700 hover:underline">Size Guide</button>
+                <Link to="/contact-clothify#size-guide" className="text-sm text-blue-700 hover:underline">Size Guide</Link>
               </div>
               <div className="flex flex-wrap gap-3">
                 {product.sizes.map(size => (
@@ -272,39 +268,30 @@ export function ProductDetails() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8 border-t border-zinc-100">
             <div className="flex items-center gap-3 text-zinc-700">
               <Truck className="w-5 h-5 text-teal-600" />
-              <span className="text-sm font-medium">Free Shipping over ₹1,999</span>
+              <Link to="/contact-clothify#shipping-policy" className="text-sm font-medium hover:underline">Shipping information</Link>
             </div>
             <div className="flex items-center gap-3 text-zinc-700">
               <RefreshCw className="w-5 h-5 text-teal-600" />
-              <span className="text-sm font-medium">14-Day Easy Returns</span>
+              <Link to="/contact-clothify#returns-exchanges" className="text-sm font-medium hover:underline">Returns information</Link>
             </div>
             <div className="flex items-center gap-3 text-zinc-700">
               <ShieldCheck className="w-5 h-5 text-teal-600" />
-              <span className="text-sm font-medium">100% Original Guarantee</span>
+              <Link to="/contact-clothify" className="text-sm font-medium hover:underline">Questions? Contact us</Link>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Reviews Section */}
-      <div className="mt-20 pt-10 border-t border-zinc-200">
-        <h3 className="text-2xl font-black text-zinc-900 mb-8">Customer Reviews</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="bg-zinc-50 p-6 rounded-2xl">
-              <div className="flex items-center gap-2 mb-3 text-yellow-500">
-                {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-current" />)}
-              </div>
-              <h4 className="font-bold text-zinc-900 mb-2">Excellent Quality!</h4>
-              <p className="text-sm text-zinc-600 mb-4">The fabric is incredibly soft and the fit is just perfect. I was worried about ordering online but the size guide was spot on. Highly recommend!</p>
-              <div className="flex items-center justify-between text-xs text-zinc-500">
-                <span className="font-medium text-zinc-800">Jane Doe</span>
-                <span>2 days ago</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {relatedProducts.length > 0 && (
+        <section className="mt-20 border-t border-zinc-200 pt-10" aria-labelledby="related-products-title">
+          <h2 id="related-products-title" className="text-2xl font-black text-zinc-900 mb-8">
+            More from the {product.category} collection
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {relatedProducts.map(item => <ProductCard key={item.id} product={item} />)}
+          </div>
+        </section>
+      )}
+
     </div>
   );
 }

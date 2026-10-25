@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { PAGE_SEO, SITE_URL } from '../seo';
@@ -52,6 +53,32 @@ export function Contact() {
  </motion.p>
  </div>
 
+ <section aria-labelledby="customer-service-title" className="mb-16">
+ <h2 id="customer-service-title" className="sr-only">Customer service information</h2>
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ <section id="shipping-policy" className="bg-white/80 border border-zinc-200 rounded-sm p-6 scroll-mt-28">
+ <h3 className="text-lg font-bold text-zinc-900 mb-2">Shipping Policy</h3>
+ <p className="text-sm text-zinc-600 leading-relaxed">Shipping costs, delivery areas and delivery timelines are not currently published on this site. Contact Clothify to confirm the details before ordering.</p>
+ </section>
+ <section id="returns-exchanges" className="bg-white/80 border border-zinc-200 rounded-sm p-6 scroll-mt-28">
+ <h3 className="text-lg font-bold text-zinc-900 mb-2">Returns &amp; Exchanges</h3>
+ <p className="text-sm text-zinc-600 leading-relaxed">Returns and exchange terms are not currently published here. Please ask Clothify about the applicable terms before placing an order.</p>
+ </section>
+ <section id="size-guide" className="bg-white/80 border border-zinc-200 rounded-sm p-6 scroll-mt-28">
+ <h3 className="text-lg font-bold text-zinc-900 mb-2">Size Guide</h3>
+ <p className="text-sm text-zinc-600 leading-relaxed">Product pages list available size options, but this site does not currently provide measurement charts. Contact Clothify if you need measurements or fit guidance.</p>
+ </section>
+ <section id="faq" className="bg-white/80 border border-zinc-200 rounded-sm p-6 scroll-mt-28">
+ <h3 className="text-lg font-bold text-zinc-900 mb-2">Frequently Asked Questions</h3>
+ <dl className="space-y-3 text-sm text-zinc-600">
+ <div><dt className="font-semibold text-zinc-900">Where can I browse clothing?</dt><dd>Use the <Link to="/premium-clothing-collection" className="text-blue-700 hover:underline">Men, Women and Kids collections</Link>.</dd></div>
+ <div><dt className="font-semibold text-zinc-900">Does checkout process a real order?</dt><dd>No. Checkout is a demonstration and does not process payment or arrange delivery.</dd></div>
+ <div><dt className="font-semibold text-zinc-900">Where can I ask about shipping, returns or sizing?</dt><dd>Use the contact details and message form on this page.</dd></div>
+ </dl>
+ </section>
+ </div>
+ </section>
+
  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
  {/* Contact Info */}
  <motion.div 
@@ -102,7 +129,7 @@ export function Contact() {
  <div className="w-full h-64 bg-zinc-100 rounded-sm relative overflow-hidden group">
  <img 
  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&fm=webp&w=800" 
- alt="City map near the Clothify store" 
+ alt="City map illustration"
  width="800"
  height="400"
  decoding="async"
@@ -112,7 +139,7 @@ export function Contact() {
  />
  <div className="absolute inset-0 flex items-center justify-center">
  <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-sm shadow-lg text-xs font-semibold tracking-wider text-black uppercase">
- View on Google Maps
+ Map preview
  </div>
  </div>
  </div>

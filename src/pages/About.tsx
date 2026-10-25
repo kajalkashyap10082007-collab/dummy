@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { PAGE_SEO, SITE_URL } from '../seo';
 
@@ -88,6 +89,15 @@ export function About() {
  </div>
  </motion.div>
  </div>
+ </section>
+
+ <section className="pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row gap-4 justify-center">
+ <Link to="/premium-clothing-collection" className="bg-blue-700 text-white px-7 py-3 text-sm font-bold uppercase tracking-widest text-center hover:bg-blue-800 transition-colors">
+ Browse the collections
+ </Link>
+ <Link to="/contact-clothify" className="border border-zinc-300 text-zinc-800 px-7 py-3 text-sm font-bold uppercase tracking-widest text-center hover:border-blue-700 hover:text-blue-700 transition-colors">
+ Contact Clothify
+ </Link>
  </section>
 
  {/* Leadership */}

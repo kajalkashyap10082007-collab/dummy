@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { useToast } from '../components/Toast';
 import { SEO } from '../components/SEO';
@@ -23,8 +23,6 @@ export function Checkout() {
   });
 
   const subtotal = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
-  const shipping = subtotal > 1999 || subtotal === 0 ? 0 : 99;
-  const finalTotal = subtotal + shipping;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,8 +38,8 @@ export function Checkout() {
     // Process order (demo)
     setTimeout(() => {
       clearCart();
-      toast('Order placed successfully! ✓', 'success');
-      navigate('/order-confirmation', { state: { orderId: 'ORD-' + Math.floor(Math.random() * 1000000), total: finalTotal } });
+      toast('Demo checkout completed. No payment or delivery was arranged.', 'info');
+      navigate('/order-confirmation', { state: { orderId: 'ORD-' + Math.floor(Math.random() * 1000000), total: subtotal } });
     }, 1500);
   };
 
@@ -49,7 +47,7 @@ export function Checkout() {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center">
         <p className="text-xl mb-4">No items to checkout.</p>
-        <button onClick={() => navigate('/products')} className="text-slate-900 hover:underline">Back to Shop</button>
+        <Link to="/premium-clothing-collection" className="text-slate-900 hover:underline">Back to Shop</Link>
       </div>
     );
   }
@@ -133,15 +131,16 @@ export function Checkout() {
               </div>
               <div className="flex justify-between text-zinc-600">
                 <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+                <Link to="/contact-clothify#shipping-policy" className="text-blue-700 hover:underline">Confirm with Clothify</Link>
               </div>
             </div>
             
             <div className="border-t border-zinc-200 pt-4 mb-8">
               <div className="flex justify-between items-center">
-                <span className="font-bold text-zinc-900">Total</span>
-                <span className="text-2xl font-black text-zinc-900">₹{finalTotal.toLocaleString()}</span>
+                <span className="font-bold text-zinc-900">Items subtotal</span>
+                <span className="text-2xl font-black text-zinc-900">₹{subtotal.toLocaleString()}</span>
               </div>
+              <p className="text-xs text-zinc-500 mt-3">This is a demo checkout. No payment is processed and shipping is not arranged.</p>
             </div>
             
             <button 
@@ -149,7 +148,7 @@ export function Checkout() {
               form="checkout-form"
               className="w-full bg-slate-900 text-white py-4 rounded-full font-black uppercase tracking-widest hover:bg-slate-800 transition-colors"
             >
-              Place Order
+              Complete Demo Checkout
             </button>
           </div>
         </div>

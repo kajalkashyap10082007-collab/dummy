@@ -1,39 +1,47 @@
-import { BlogPost, Product, Testimonial } from './types';
+import { BlogPost, Product } from './types';
 
 const imageUrl = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=82&fm=webp&w=900`;
 
 const productImages = {
   Men: [
-    'photo-1521572163474-6864f9cf17ab', 'photo-159675594514-f87e34085b2c',
+    'photo-1521572163474-6864f9cf17ab',
     'photo-1617127365659-c47fa864d8bc', 'photo-1551488831-00ddcb6c6bd3',
-    'photo-1516826957135-700dedea698c', 'photo-1551488831-00ddcb6c6bd3',
-    'photo-1548883354-94bcfe321cbb', 'photo-1593030761757-71fae46af508'
+    'photo-1516826957135-700dedea698c', 'photo-1548883354-94bcfe321cbb',
+    'photo-1550995694-3f5f4a7e1bd2', 'photo-1594938298603-c8148c4dae35',
+    'photo-1556821840-3a63f95609a7', 'photo-1617137984095-74e4e5e3613f',
+    'photo-1620799140408-edc6dcb6d633', 'photo-1542272604-787c3835535d',
+    'photo-1502163140606-888448ae8cfe'
   ],
   Women: [
     'photo-1595777457583-95e059d581b8', 'photo-1572804013309-59a88b7e92f1',
     'photo-1485968579580-b6d095142e6e', 'photo-1551028719-00167b16eac5',
     'photo-1496747611176-843222e1e57c', 'photo-1539109136881-3be0616acf4b',
-    'photo-1566174053879-31528523f8ae', 'photo-1515886657613-9f3515b0c78f'
+    'photo-1566174053879-31528523f8ae', 'photo-1515886657613-9f3515b0c78f',
+    'photo-1551163943-3f6a855d1153',
+    'photo-1612336307429-8a898d10e223', 'photo-1566150905458-1bf1fc113f0d',
+    'photo-1469334031218-e382a71b716b', 'photo-1483985988355-763728e1935b',
+    'photo-1519238263530-99bdd11df2ea', 'photo-1445205170230-053b83016050'
   ],
   Kids: [
     'photo-1503919545889-aef636e10ad4', 'photo-1519238263530-99bdd11df2ea',
     'photo-1622290291468-a28f7a7dc6a8', 'photo-1518831959646-742c3a14ebf7',
-    'photo-1596870230751-ebdfce98ec42', 'photo-1621452773781-0f992fd1f5ba',
-    'photo-1519457431-44ccd64a579b', 'photo-1596870230751-ebdfce98ec42'
+    'photo-1596870230751-ebdfce98ec42', 'photo-1519457431-44ccd64a579b',
+    'photo-1604467794349-0b74285de7e7', 'photo-1514090458221-65bb69cf63e6',
+    'photo-1519241047957-be31d7379a5d', 'photo-1509319117193-57bab727e09d'
   ]
 };
 
 type ClothingCategory = 'Men' | 'Women' | 'Kids';
 
 const catalog = [
-  ['Men', ['Essential Cotton T-Shirt', 'Oxford Casual Shirt', 'Slim Fit Dark Jeans', 'Relaxed Cargo Trousers', 'Everyday Zip Hoodie', 'Lightweight Denim Jacket', 'French Terry Sweatshirt', 'Weekend Polo T-Shirt', 'Classic Formal Shirt', 'Textured Resort Shirt', 'Tapered Blue Jeans', 'Comfort Chinos', 'Colourblock Hoodie', 'Linen Blend Shirt', 'Smart Casual Blazer', 'Essential Joggers']],
-  ['Women', ['Floral Midi Dress', 'Printed Cotton Kurti', 'Satin Party Dress', 'Everyday Ribbed Top', 'High Rise Straight Jeans', 'Floral Co-ord Set', 'Embroidered Anarkali', 'Festive Silk Saree', 'Pleated Western Dress', 'Relaxed Linen Shirt', 'Wrap Mini Dress', 'Soft Knit Top', 'Wide Leg Jeans', 'Printed Sharara Set', 'Ruched Party Top', 'Cotton A-Line Kurti']],
+  ['Men', ['Essential Cotton T-Shirt', 'Oxford Casual Shirt', 'Slim Fit Dark Jeans', 'Relaxed Cargo Trousers', 'Everyday Zip Hoodie', 'Lightweight Denim Jacket', 'French Terry Sweatshirt', 'Weekend Polo T-Shirt', 'Classic Formal Shirt', 'Textured Resort Shirt', 'Tapered Blue Jeans', 'Comfort Chinos', "Men's Cotton Kurta", 'Linen Blend Shirt', 'Smart Casual Blazer', 'Essential Joggers']],
+  ['Women', ['Floral Midi Dress', 'Ethnic Printed Cotton Kurti', 'Satin Party Dress', "Lightweight Women's Jacket", 'High Rise Straight Jeans', 'Floral Co-ord Set', 'Embroidered Ethnic Anarkali', 'Festive Ethnic Silk Saree', 'Pleated Western Dress', 'Relaxed Linen Shirt', 'Wrap Mini Dress', 'Soft Knit Top', 'Wide Leg Jeans', 'Ethnic Sharara Set', 'Ruched Party Top', 'Ethnic Cotton A-Line Kurti']],
   ['Kids', ['Dino Graphic T-Shirt', 'Checked Boys Shirt', 'Girls Cotton Dress', 'Stretch Kids Jeans', 'Colour Pop Hoodie', 'Mini Co-ord Set', 'Playtime Casual Set', 'Festive Kurta Set', 'Rainbow Sweatshirt', 'Boys Polo T-Shirt', 'Floral Party Dress', 'Soft Denim Overalls', 'Printed Joggers Set', 'Little Explorer Shirt', 'Festive Frock', 'Everyday Cotton Shorts Set']]
 ] as const;
 
 const prices: Record<ClothingCategory, number[]> = {
   Men: [399, 699, 999, 799, 899, 1299, 749, 599, 899, 799, 1099, 999, 999, 699, 1499, 699],
-  Women: [899, 599, 1199, 399, 1099, 999, 899, 1299, 999, 699, 799, 449, 1199, 999, 699, 499],
+  Women: [899, 599, 1199, 899, 1099, 999, 899, 1299, 999, 699, 799, 449, 1199, 999, 699, 499],
   Kids: [299, 599, 799, 699, 899, 749, 599, 799, 699, 399, 799, 699, 599, 499, 649, 449]
 };
 
@@ -41,27 +49,19 @@ export const products: Product[] = catalog.flatMap(([category, names]) =>
   names.map((name, index) => {
     const typedCategory = category as ClothingCategory;
     const price = prices[typedCategory][index];
-    const originalPrice = price + (index % 3 === 0 ? 400 : index % 3 === 1 ? 300 : 250);
     const image = imageUrl(productImages[typedCategory][index % productImages[typedCategory].length]);
-    const hoverImage = imageUrl(productImages[typedCategory][(index + 2) % productImages[typedCategory].length]);
     return {
       id: `${typedCategory.toLowerCase()}-${index + 1}`,
       name,
       price,
-      originalPrice,
-      discount: Math.round(((originalPrice - price) / originalPrice) * 100),
       category: typedCategory,
       image,
-      imageAlt: `${typedCategory === 'Men' ? "Men's" : typedCategory === 'Women' ? "Women's" : "Kids'"} ${name.toLowerCase()}`,
-      hoverImage,
-      images: [image, hoverImage],
-      description: `A comfortable ${name.toLowerCase()} made for everyday Indian style. Easy to wear, easy to love, and finished with a fit that moves with you.`,
+      imageAlt: `${typedCategory === 'Men' ? "Men's" : typedCategory === 'Women' ? "Women's" : "Kids'"} ${name}`,
+      images: [image],
+      description: `The ${name.toLowerCase()} is part of Clothify's ${typedCategory.toLowerCase()} collection. Review the listed sizes and colours before adding this item to your cart.`,
       sizes: typedCategory === 'Kids' ? ['2-3Y', '4-5Y', '6-7Y', '8-9Y'] : ['S', 'M', 'L', 'XL', 'XXL'],
       colors: ['Black', 'White', 'Navy', 'Sage'],
-      reviews: 34 + ((index * 47 + typedCategory.length * 9) % 260),
-      rating: Number((4.1 + ((index * 7) % 9) / 10).toFixed(1)),
       isTrending: index % 4 === 0,
-      isNewArrival: index % 5 === 0
     } satisfies Product;
   })
 );
@@ -314,34 +314,10 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 'b3',
-    title: '5 Ways to Style a Classic White Tee',
+    title: '5 Ways to Style a Classic White T-Shirt',
     excerpt: 'Unlock the versatility of the humble white t-shirt. From casual daytime looks to elevated evening ensembles.',
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&fm=webp&w=800',
+image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
     date: 'Aug 15, 2026',
     category: 'Styling'
-  }
-];
-
-export const testimonials: Testimonial[] = [
-  {
-    id: 't1',
-    name: 'Sarah Jenkins',
-    role: 'Fashion Blogger',
-    content: 'Clothify is my go-to for modern, affordable pieces that look designer. The quality of their linen collection is unmatched.',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&fm=webp&w=150'
-  },
-  {
-    id: 't2',
-    name: 'David Chen',
-    role: 'Creative Director',
-    content: 'The user experience on this site is incredible. I found the perfect leather sneakers, and the shipping was lightning fast.',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&fm=webp&w=150'
-  },
-  {
-    id: 't3',
-    name: 'Emma Thompson',
-    role: 'Loyal Customer',
-    content: 'I appreciate their commitment to sustainable fashion without compromising on style. Their accessory line is a hidden gem!',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&fm=webp&w=150'
   }
 ];

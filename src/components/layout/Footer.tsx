@@ -35,10 +35,10 @@ export function Footer() {
               <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-blue-700"></span>
             </h3>
             <ul className="space-y-3">
-              <li><Link to="/products" className="hover:text-blue-400 transition-colors inline-block text-sm">Shop All</Link></li>
-              <li><Link to="/products?category=Men" className="hover:text-blue-400 transition-colors inline-block text-sm">Men's Collection</Link></li>
-              <li><Link to="/products?category=Women" className="hover:text-blue-400 transition-colors inline-block text-sm">Women's Collection</Link></li>
-              <li><Link to="/products?trending=true" className="hover:text-blue-400 transition-colors inline-block text-sm">Trending Now</Link></li>
+              <li><Link to="/premium-clothing-collection" className="hover:text-blue-400 transition-colors inline-block text-sm">Shop All</Link></li>
+              <li><Link to="/premium-clothing-collection?category=Men" className="hover:text-blue-400 transition-colors inline-block text-sm">Men's Collection</Link></li>
+              <li><Link to="/premium-clothing-collection?category=Women" className="hover:text-blue-400 transition-colors inline-block text-sm">Women's Collection</Link></li>
+              <li><Link to="/premium-clothing-collection?trending=true" className="hover:text-blue-400 transition-colors inline-block text-sm">Trending Now</Link></li>
               <li><Link to="/about-clothify-sustainable-fashion" className="hover:text-blue-400 transition-colors inline-block text-sm">About Us</Link></li>
             </ul>
           </div>
@@ -51,17 +51,17 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               <li><Link to="/contact-clothify" className="hover:text-blue-400 transition-colors inline-block text-sm">Contact Us</Link></li>
-              <li><span className="text-zinc-300 inline-block text-sm">Shipping Policy</span></li>
-              <li><span className="text-zinc-300 inline-block text-sm">Returns & Exchanges</span></li>
-              <li><span className="text-zinc-300 inline-block text-sm">Size Guide</span></li>
-              <li><span className="text-zinc-300 inline-block text-sm">FAQ</span></li>
+              <li><Link to="/contact-clothify#shipping-policy" className="hover:text-blue-400 transition-colors inline-block text-sm">Shipping Policy</Link></li>
+              <li><Link to="/contact-clothify#returns-exchanges" className="hover:text-blue-400 transition-colors inline-block text-sm">Returns & Exchanges</Link></li>
+              <li><Link to="/contact-clothify#size-guide" className="hover:text-blue-400 transition-colors inline-block text-sm">Size Guide</Link></li>
+              <li><Link to="/contact-clothify#faq" className="hover:text-blue-400 transition-colors inline-block text-sm">FAQ</Link></li>
             </ul>
           </div>
 
           {/* Contact Info & Newsletter */}
           <div>
             <h3 className="text-white font-bold uppercase tracking-widest text-sm mb-6 relative inline-block">
-              Stay in the loop
+              Explore Clothify
               <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-blue-700"></span>
             </h3>
             <div className="space-y-4 mb-6">
@@ -79,22 +79,10 @@ export function Footer() {
               </div>
             </div>
             
-            <form onSubmit={(e) => e.preventDefault()} className="flex">
-              <label htmlFor="footer-email" className="sr-only">Email address</label>
-              <input 
-                type="email" 
-                id="footer-email"
-                placeholder="Your email address" 
-                className="bg-zinc-800 border-none text-white px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-700 text-sm rounded-l-sm"
-                required
-              />
-              <button 
-                type="submit" 
-                className="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 font-bold uppercase tracking-widest text-xs transition-colors rounded-r-sm"
-              >
-                Subscribe
-              </button>
-            </form>
+            <p className="text-xs text-zinc-400 mb-3">Newsletter sign-up is not available on this site.</p>
+            <Link to="/premium-clothing-collection" className="inline-block bg-blue-700 hover:bg-blue-600 text-white px-4 py-3 font-bold uppercase tracking-widest text-xs transition-colors rounded-sm">
+              Browse the collection
+            </Link>
           </div>
         </div>
 
@@ -102,10 +90,6 @@ export function Footer() {
           <p className="text-sm text-zinc-300 text-center md:text-left">
             &copy; {new Date().getFullYear()} Clothify. All rights reserved.
           </p>
-          <div className="flex gap-4 text-sm text-zinc-300">
-            <span className="text-zinc-300">Privacy Policy</span>
-            <span className="text-zinc-300">Terms of Service</span>
-          </div>
         </div>
       </div>
     </footer>

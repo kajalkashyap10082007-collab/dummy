@@ -1,4 +1,4 @@
-import { X, Star, ShoppingBag, Heart } from 'lucide-react';
+import { X, ShoppingBag, Heart } from 'lucide-react';
 import { useEffect, useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types';
@@ -81,22 +81,12 @@ function QuickViewComponent({ product, isOpen, onClose }: QuickViewProps) {
               <span className="text-xs font-black text-blue-700 uppercase tracking-widest">{product.category}</span>
               <h2 id="quick-view-title" className="text-2xl font-black text-zinc-900 mt-2 mb-3">{product.name}</h2>
               
-              <div className="flex items-center gap-3 mb-4 text-yellow-500">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => <Star key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-current' : 'text-zinc-300'}`} />)}
-                </div>
-                <span className="text-sm text-zinc-600 font-medium">({product.reviews || 0} Reviews)</span>
-              </div>
-              
               <div className="flex items-end gap-3 mb-6">
                 <span className="text-2xl font-black text-zinc-900">₹{product.price.toLocaleString()}</span>
-                {product.originalPrice && (
-                  <span className="text-sm text-zinc-500 line-through mb-1">₹{product.originalPrice.toLocaleString()}</span>
-                )}
               </div>
               
               <p className="text-sm text-zinc-600 leading-relaxed mb-6 line-clamp-3">
-                {product.description || 'Premium quality piece from Clothify. Elevate your wardrobe with our latest collection.'}
+                {product.description || `${product.name} from the ${product.category.toLowerCase()} collection.`}
               </p>
               
               {product.sizes && product.sizes.length > 0 && (
